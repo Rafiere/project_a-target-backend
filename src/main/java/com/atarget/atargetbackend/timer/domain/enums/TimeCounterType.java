@@ -1,7 +1,7 @@
 package com.atarget.atargetbackend.timer.domain.enums;
 
 
-public enum TimerCountType {
+public enum TimeCounterType {
 
 	/**
 	 * Um instrumento de marcação de tempo que não está conectado à nenhuma tarefa.

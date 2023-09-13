@@ -1,25 +1,27 @@
 package com.atarget.atargetbackend.timer.service;
 
-import com.atarget.atargetbackend.timer.controller.request.CreateTimerCountRequest;
-import com.atarget.atargetbackend.timer.controller.response.CreateTimerCountResponse;
-import com.atarget.atargetbackend.timer.domain.TimerCount;
-import com.atarget.atargetbackend.timer.repository.TimerCountRepository;
+import com.atarget.atargetbackend.timer.controller.request.CreateTimeCounterRequest;
+import com.atarget.atargetbackend.timer.controller.response.CreateTimeCounterResponse;
+import com.atarget.atargetbackend.timer.domain.TimeCounter;
+import com.atarget.atargetbackend.timer.repository.TimeCounterRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class CreateTimerCountService {
 
-	private TimerCountRepository timerCountRepository;
+	private TimeCounterRepository timeCounterRepository;
 
-	public CreateTimerCountResponse execute(CreateTimerCountRequest request) {
+	public CreateTimeCounterResponse execute(CreateTimeCounterRequest request) {
 
-		TimerCount createdTimerCount =
-				TimerCount.of(request.name(), request.timerCountType(), request.countTimeMethod());
+		TimeCounter createdTimeCounter =
+				TimeCounter.of(request.name(), request.description(), request.timeCounterType(), request.timeCounterMethod());
 
-		timerCountRepository.save(createdTimerCount);
+		timeCounterRepository.save(createdTimeCounter);
 
-		return CreateTimerCountResponse.of(createdTimerCount);
+		return CreateTimeCounterResponse.of(createdTimeCounter);
 	}
 }
