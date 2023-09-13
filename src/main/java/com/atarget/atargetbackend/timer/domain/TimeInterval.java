@@ -1,33 +1,39 @@
 package com.atarget.atargetbackend.timer.domain;
 
 import com.atarget.atargetbackend.auth.domain.User;
+import jakarta.persistence.Entity;
 import lombok.Getter;
 import org.springframework.data.jpa.domain.AbstractAuditable;
 
 import java.time.Duration;
 
 @Getter
+@Entity
 public class TimeInterval extends AbstractAuditable<User, String> {
 
 	private String name;
-	private final Duration duration;
+	private String description;
+	private Duration duration;
 
-	private TimeInterval(final String name, final Duration duration){
-		this.name = name;
+	public TimeInterval(){}
+
+	private TimeInterval(final Duration duration){
 		this.duration = duration;
 	}
 
-	public static TimeInterval of(final String name, final Duration duration){
-		return new TimeInterval(name, duration);
+	public static TimeInterval of(final Duration duration){
+		return new TimeInterval(duration);
 	}
 
-	public TimeInterval changeTimeIntervalName(final String newName){
+	public void updateTimeInterval(String newName, String newDescription) {
+		if(newName != null && !newName.isBlank()){
 
-		if(newName.isBlank()){
-			throw new IllegalArgumentException("Name cannot be blank");
+			this.name = newName;
 		}
-		this.name = newName;
 
-		return this;
+		if(newDescription != null && !newDescription.isBlank()){
+
+			this.description = newDescription;
+		}
 	}
 }
