@@ -10,6 +10,7 @@ import org.springframework.data.jpa.domain.AbstractAuditable;
 
 import java.time.Duration;
 import java.util.List;
+import java.util.UUID;
 
 @Getter
 @Entity
@@ -28,6 +29,7 @@ public class TimeCounter extends AbstractAuditable<User, String> {
 	                    final TimeCounterType timeCounterType,
 	                    final TimeCounterMethod timeCounterMethod) {
 
+		this.setId(UUID.randomUUID().toString());
 		this.name = name;
 		this.description = description;
 		this.timeCounterType = timeCounterType;

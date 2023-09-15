@@ -6,6 +6,7 @@ import lombok.Getter;
 import org.springframework.data.jpa.domain.AbstractAuditable;
 
 import java.time.Duration;
+import java.util.UUID;
 
 @Getter
 @Entity
@@ -18,6 +19,7 @@ public class TimeInterval extends AbstractAuditable<User, String> {
 	public TimeInterval(){}
 
 	private TimeInterval(final Duration duration){
+		this.setId(UUID.randomUUID().toString());
 		this.duration = duration;
 	}
 
