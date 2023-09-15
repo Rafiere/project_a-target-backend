@@ -22,6 +22,6 @@ public class CreateTimerCountService {
 
 		timeCounterRepository.save(createdTimeCounter);
 
-		return CreateTimeCounterResponse.of(createdTimeCounter);
+		return CreateTimeCounterResponse.from(createdTimeCounter);
 	}
 }
