@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 
 public record CreateTimeCounterResponse(String id, String name, String timerCountType, String countTimeMethod, LocalDateTime createdDateTime) {
 
-	public static CreateTimeCounterResponse of(TimeCounter createdTimeCounter) {
+	public static CreateTimeCounterResponse from(TimeCounter createdTimeCounter) {
 
 		return new CreateTimeCounterResponse(
 				createdTimeCounter.getId(),
