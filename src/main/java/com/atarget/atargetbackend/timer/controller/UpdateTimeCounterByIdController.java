@@ -16,7 +16,7 @@ public class UpdateTimeCounterByIdController {
 
 	private final UpdateTimeCounterByIdService service;
 
-	@PatchMapping(path = "/time-counter/{timeCounterId}")
+	@PatchMapping(path = "/time-counters/{timeCounterId}")
 	public ResponseEntity<GetTimeCounterResponse> execute(@RequestBody UpdateTimeCounterRequest request, @PathVariable String timeCounterId) {
 
 		request.durationToProcess().validate();
