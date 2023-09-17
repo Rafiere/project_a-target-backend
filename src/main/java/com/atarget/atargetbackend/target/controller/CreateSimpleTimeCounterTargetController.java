@@ -15,7 +15,7 @@ public class CreateSimpleTimeCounterTargetController {
 
 	private final CreateSimpleTimeCounterTargetService service;
 
-	@PostMapping(name = "/targets/simple-time-counter", consumes = "application/json", produces = "application/json")
+	@PostMapping(path = "/targets/simple-time-counter", consumes = "application/json", produces = "application/json")
 	public ResponseEntity<CreateSimpleTimeCounterTargetResponse> execute(@RequestBody CreateSimpleTimeCounterTargetRequest request){
 
 		var response = service.execute(request);

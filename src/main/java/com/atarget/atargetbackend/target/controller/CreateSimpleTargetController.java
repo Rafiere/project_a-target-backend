@@ -15,7 +15,7 @@ public class CreateSimpleTargetController {
 
 	private final CreateSimpleTargetService service;
 
-	@PostMapping(name = "/targets/simple", consumes = "application/json", produces = "application/json")
+	@PostMapping(path = "/targets/simple", consumes = "application/json", produces = "application/json")
 	public ResponseEntity<CreateSimpleTargetResponse> execute(@RequestBody CreateSimpleTargetRequest request){
 
 		var response = service.execute(request);
