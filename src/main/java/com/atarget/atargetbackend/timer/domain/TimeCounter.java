@@ -1,6 +1,6 @@
 package com.atarget.atargetbackend.timer.domain;
 
-import com.atarget.atargetbackend.auth.domain.User;
+import com.atarget.atargetbackend.auth.domain.Persona;
 import com.atarget.atargetbackend.timer.domain.enums.TimeCounterMethod;
 import com.atarget.atargetbackend.timer.domain.enums.TimeCounterDurationOperation;
 import com.atarget.atargetbackend.timer.domain.enums.TimeCounterType;
@@ -14,7 +14,7 @@ import java.util.UUID;
 
 @Getter
 @Entity
-public class TimeCounter extends AbstractAuditable<User, String> {
+public class TimeCounter extends AbstractAuditable<Persona, String> {
 
 	private String name;
 	private String description;

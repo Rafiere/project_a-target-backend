@@ -1,6 +1,6 @@
 package com.atarget.atargetbackend.timer.domain;
 
-import com.atarget.atargetbackend.auth.domain.User;
+import com.atarget.atargetbackend.auth.domain.Persona;
 import jakarta.persistence.Entity;
 import lombok.Getter;
 import org.springframework.data.jpa.domain.AbstractAuditable;
@@ -10,7 +10,7 @@ import java.util.UUID;
 
 @Getter
 @Entity
-public class TimeInterval extends AbstractAuditable<User, String> {
+public class TimeInterval extends AbstractAuditable<Persona, String> {
 
 	private String name;
 	private String description;
