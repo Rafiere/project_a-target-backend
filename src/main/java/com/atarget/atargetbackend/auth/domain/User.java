@@ -15,7 +15,7 @@ import java.util.List;
 @Getter
 public class User extends AbstractAuditable<Persona, String> implements UserDetails {
 
-	private String email;
+	@Column(unique = true) private String email;
 
 	private String password;
 
