@@ -3,7 +3,7 @@ package com.atarget.atargetbackend.target.service;
 import com.atarget.atargetbackend.target.controller.request.CreateSimpleQuantifierTargetRequest;
 import com.atarget.atargetbackend.target.controller.response.CreateSimpleQuantifierTargetResponse;
 import com.atarget.atargetbackend.target.domain.SimpleQuantifierTarget;
-import com.atarget.atargetbackend.target.repository.TargetRepository;
+import com.atarget.atargetbackend.target.repository.SimpleQuantifierTargetRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class CreateSimpleQuantifierTargetService {
 
-	private final TargetRepository<SimpleQuantifierTarget> targetRepository;
+	private final SimpleQuantifierTargetRepository targetRepository;
 
 	public CreateSimpleQuantifierTargetResponse execute(CreateSimpleQuantifierTargetRequest request){
 

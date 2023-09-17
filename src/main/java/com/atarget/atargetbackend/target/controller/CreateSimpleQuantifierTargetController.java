@@ -15,7 +15,7 @@ public class CreateSimpleQuantifierTargetController {
 
 	private final CreateSimpleQuantifierTargetService service;
 
-	@PostMapping(name = "/targets/simple-quantifier", consumes = "application/json", produces = "application/json")
+	@PostMapping(path = "/targets/simple-quantifier", consumes = "application/json", produces = "application/json")
 	public ResponseEntity<CreateSimpleQuantifierTargetResponse> execute(@RequestBody CreateSimpleQuantifierTargetRequest request){
 
 		var response = service.execute(request);

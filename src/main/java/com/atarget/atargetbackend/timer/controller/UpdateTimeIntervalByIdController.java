@@ -16,7 +16,7 @@ public class UpdateTimeIntervalByIdController {
 
 	private final UpdateTimeIntervalByIdService service;
 
-	@PatchMapping(path = "/timer/interval/{timeIntervalId}")
+	@PatchMapping(path = "/time-counters/interval/{timeIntervalId}")
 	public ResponseEntity<GetTimerIntervalResponse> execute(@RequestBody UpdateTimeIntervalRequest request,
 	                                                        @PathVariable String timeIntervalId) {
 

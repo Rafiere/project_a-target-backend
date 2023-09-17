@@ -1,0 +1,22 @@
+spring:
+  datasource:
+    url: "jdbc:postgresql://localhost:5433/a-target"
+    username: "root"
+    password: "root"
+
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        hbm2ddl:
+          auto: "update"
+        format_sql: true
+        dialect: "org.hibernate.dialect.PostgreSQLDialect"
+
+environment:
+  api:
+    security:
+      token:
+        secret: ${JWT_SECRET:test}
+        access-token:
+          expiration-in-seconds: 86400

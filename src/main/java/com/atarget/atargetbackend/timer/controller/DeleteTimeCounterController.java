@@ -11,7 +11,7 @@ public class DeleteTimeCounterController {
 
 	private final DeleteTimeCounterService service;
 
-	@DeleteMapping(path = "/time-counter/{timeCounterId}", produces = "application/json")
+	@DeleteMapping(path = "/time-counters/{timeCounterId}", produces = "application/json")
 	public ResponseEntity<Void> execute(@PathVariable String timeCounterId){
 
 		 service.execute(timeCounterId);

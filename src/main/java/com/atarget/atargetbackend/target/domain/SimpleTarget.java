@@ -1,6 +1,6 @@
 package com.atarget.atargetbackend.target.domain;
 
-import com.atarget.atargetbackend.auth.domain.User;
+import com.atarget.atargetbackend.auth.domain.Persona;
 import com.atarget.atargetbackend.target.domain.enums.MetaType;
 import com.atarget.atargetbackend.target.domain.interfaces.Targetable;
 import jakarta.persistence.Entity;
@@ -11,7 +11,7 @@ import java.util.UUID;
 
 @Getter
 @Entity
-public class SimpleTarget extends AbstractAuditable<User, String> implements Targetable {
+public class SimpleTarget extends AbstractAuditable<Persona, String> implements Targetable {
 
 	private String name;
 	private String description;

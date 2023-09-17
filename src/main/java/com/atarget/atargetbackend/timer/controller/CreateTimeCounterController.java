@@ -15,7 +15,7 @@ public class CreateTimeCounterController {
 
 	private final CreateTimerCountService service;
 
-	@PostMapping(path = "/time-counter", consumes = "application/json", produces = "application/json")
+	@PostMapping(path = "/time-counters", consumes = "application/json", produces = "application/json")
 	public ResponseEntity<CreateTimeCounterResponse> execute(@RequestBody CreateTimeCounterRequest request){
 
 		CreateTimeCounterResponse result = service.execute(request);
