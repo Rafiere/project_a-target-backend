@@ -3,7 +3,7 @@ package com.atarget.atargetbackend.target.service;
 import com.atarget.atargetbackend.target.controller.request.CreateSimpleTimeCounterTargetRequest;
 import com.atarget.atargetbackend.target.controller.response.CreateSimpleTimeCounterTargetResponse;
 import com.atarget.atargetbackend.target.domain.SimpleTimeCounterTarget;
-import com.atarget.atargetbackend.target.repository.TargetRepository;
+import com.atarget.atargetbackend.target.repository.SimpleTimeCounterTargetRepository;
 import com.atarget.atargetbackend.timer.domain.TimeCounter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class CreateSimpleTimeCounterTargetService {
 
-	private final TargetRepository<SimpleTimeCounterTarget> targetRepository;
+	private final SimpleTimeCounterTargetRepository simpleTimeCounterTargetRepository;
 
 	public CreateSimpleTimeCounterTargetResponse execute(CreateSimpleTimeCounterTargetRequest request) {
 
@@ -30,7 +30,7 @@ public class CreateSimpleTimeCounterTargetService {
 		SimpleTimeCounterTarget createdSimpleTimeCounterTarget =
 				SimpleTimeCounterTarget.of(request.name(), request.description(), timeCounterForTheTarget);
 
-		SimpleTimeCounterTarget savedTarget = targetRepository.save(createdSimpleTimeCounterTarget);
+		SimpleTimeCounterTarget savedTarget = simpleTimeCounterTargetRepository.save(createdSimpleTimeCounterTarget);
 
 		return CreateSimpleTimeCounterTargetResponse.from(savedTarget);
 	}
