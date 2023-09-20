@@ -1,5 +1,6 @@
-package com.atarget.atargetbackend.auth.domain;
+package com.atarget.atargetbackend.persona.domain;
 
+import com.atarget.atargetbackend.auth.domain.User;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToOne;

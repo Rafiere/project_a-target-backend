@@ -1,6 +1,6 @@
 package com.atarget.atargetbackend.target.domain;
 
-import com.atarget.atargetbackend.auth.domain.Persona;
+import com.atarget.atargetbackend.persona.domain.Persona;
 import com.atarget.atargetbackend.target.domain.enums.MetaType;
 import com.atarget.atargetbackend.target.domain.interfaces.Targetable;
 import com.atarget.atargetbackend.timer.domain.TimeCounter;

@@ -1,6 +1,6 @@
-package com.atarget.atargetbackend.auth.controller.response;
+package com.atarget.atargetbackend.persona.controller.response;
 
-import com.atarget.atargetbackend.auth.domain.Persona;
+import com.atarget.atargetbackend.persona.domain.Persona;
 import com.atarget.atargetbackend.auth.domain.UserRole;
 
 public record CreatePersonaResponse(String id, String nickname, UserRole userRole) {

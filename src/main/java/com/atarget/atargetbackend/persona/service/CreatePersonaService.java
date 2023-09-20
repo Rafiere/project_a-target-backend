@@ -1,9 +1,9 @@
-package com.atarget.atargetbackend.auth.service;
+package com.atarget.atargetbackend.persona.service;
 
-import com.atarget.atargetbackend.auth.controller.request.CreatePersonaRequest;
-import com.atarget.atargetbackend.auth.controller.response.CreatePersonaResponse;
-import com.atarget.atargetbackend.auth.domain.Persona;
-import com.atarget.atargetbackend.auth.domain.PersonalData;
+import com.atarget.atargetbackend.persona.controller.request.CreatePersonaRequest;
+import com.atarget.atargetbackend.persona.controller.response.CreatePersonaResponse;
+import com.atarget.atargetbackend.persona.domain.Persona;
+import com.atarget.atargetbackend.persona.domain.PersonalData;
 import com.atarget.atargetbackend.auth.domain.User;
 import com.atarget.atargetbackend.auth.domain.UserRole;
 import com.atarget.atargetbackend.auth.repository.PersonaRepository;
@@ -32,7 +32,7 @@ public class CreatePersonaService {
 
 		User user = User.of(request.email(), encryptedPassword, UserRole.COMMON_USER);
 
-		PersonalData personalData = PersonalData.of(request.nickname());
+		PersonalData personalData = new PersonalData();
 
 		Persona createdPersona = Persona.of(user, personalData);
 
