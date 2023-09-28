@@ -2,5 +2,5 @@ package com.atarget.atargetbackend.auth.domain.enums;
 
 public enum TokenType {
 
-	BEARER
+	BEARER, PASSWORD_RECOVERY, ACTIVATE_ACCOUNT
 }
