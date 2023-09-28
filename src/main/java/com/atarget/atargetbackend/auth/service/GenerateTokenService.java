@@ -15,14 +15,14 @@ import java.time.ZoneOffset;
 @Service
 public class GenerateTokenService {
 
-	@Value("${environment.api.security.token.secret}") private String secret;
-	@Value("${environment.api.security.token.access-token.expiration-in-seconds}") private Long accessTokenExpirationInSeconds;
+	@Value("${environment.api.security.tokens.access-token.secret}") private String accessTokenSecret;
+	@Value("${environment.api.security.tokens.access-token.expiration-in-seconds}") private Long accessTokenExpirationInSeconds;
 
 	public String generateToken(User user) {
 
 		try {
 
-			Algorithm algorithm = Algorithm.HMAC256(secret);
+			Algorithm algorithm = Algorithm.HMAC256(accessTokenSecret);
 
 			return JWT.create()
 			                  .withIssuer("a-target")
@@ -44,7 +44,7 @@ public class GenerateTokenService {
 
 		try {
 
-			Algorithm algorithm = Algorithm.HMAC256(secret);
+			Algorithm algorithm = Algorithm.HMAC256(accessTokenSecret);
 
 			return JWT.require(algorithm)
 			                  .withIssuer("a-target")
