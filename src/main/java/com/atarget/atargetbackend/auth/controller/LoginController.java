@@ -17,7 +17,7 @@ public class LoginController {
 
 	private final LoginService loginService;
 
-	@PostMapping(path = "/login", consumes = "application/json", produces = "application/json")
+	@PostMapping(path = "/auth/login", consumes = "application/json", produces = "application/json")
 	public ResponseEntity<LoginResponse> login(@RequestBody @Valid LoginRequest request){
 
 		var response = loginService.execute(request);

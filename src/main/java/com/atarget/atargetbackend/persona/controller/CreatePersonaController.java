@@ -1,8 +1,8 @@
-package com.atarget.atargetbackend.auth.controller;
+package com.atarget.atargetbackend.persona.controller;
 
-import com.atarget.atargetbackend.auth.controller.request.CreatePersonaRequest;
-import com.atarget.atargetbackend.auth.controller.response.CreatePersonaResponse;
-import com.atarget.atargetbackend.auth.service.CreatePersonaService;
+import com.atarget.atargetbackend.persona.controller.request.CreatePersonaRequest;
+import com.atarget.atargetbackend.persona.controller.response.CreatePersonaResponse;
+import com.atarget.atargetbackend.persona.service.CreatePersonaService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +15,7 @@ public class CreatePersonaController {
 
 	private final CreatePersonaService service;
 
-	@PostMapping(path = "/register", consumes = "application/json", produces = "application/json")
+	@PostMapping(path = "/persona/register", consumes = "application/json", produces = "application/json")
 	public ResponseEntity<CreatePersonaResponse> register(CreatePersonaRequest request){
 
 		var response = service.execute(request);

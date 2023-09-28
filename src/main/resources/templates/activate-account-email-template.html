@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Activate Account Email</title>
+</head>
+    <body style="
+    	background-color: #EEEEEE;
+    	font-family: Arial, Helvetica, sans-serif;
+        font-size: 16px;
+        line-height: 1.8;
+        color: #000000;
+        margin: 32px;
+        max-width: 700px;
+        padding: 32px;
+        border-color: black;
+        border-radius: 4px;
+        border-width: 2px;"
+    >
+    	<div style="text-align: center">
+            <div style="
+                max-width: 700px;"
+            >
+                <img src="https://drive.google.com/uc?export=view&id=1eh3sfphF6QqilZxv9vw5_r6lmQPZUEGD" alt="A Target App Logo" title="App Logo" style="
+                    width: 700px;
+                    height: 200px;"
+                />
+                <h1>Seja bem vindo ao nosso aplicativo, <span th:text="${name}"></span></h1>
+            </div>
+            <div style="
+                max-width: 700px;
+                margin-top: 64px;"
+            >
+                <div style="
+                    margin-top: 32px;
+                    margin-bottom: 64px;"
+                >
+                    <span>A equipe do A Target agradece a confiança e deseja que você tenha uma ótima experiência com os nossos serviços.
+                    Para ativar a sua conta, clique no link abaixo.</span>
+
+                    <a th:href="@{${link}}" style="
+                        cursor: pointer;
+                        color: #0074D9;
+                        text-decoration: underline;
+                        margin-top: 32px;
+                        display: block;"
+                    >
+                        Ativar Conta
+                    </a>
+                </div>
+            </div>
+        </div>
+            <p>Equipe A Target</p>
+            <p style="
+                    font-size: 12px;
+                    margin-top: 32px;"
+            >
+                Se você não solicitou o cadastro, por favor, ignore este e-mail.
+            </p>
+    </body>
+</html>

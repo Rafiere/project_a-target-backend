@@ -1,6 +1,6 @@
 package com.atarget.atargetbackend.timer.domain;
 
-import com.atarget.atargetbackend.auth.domain.Persona;
+import com.atarget.atargetbackend.persona.domain.Persona;
 import com.atarget.atargetbackend.timer.domain.enums.TimeCounterMethod;
 import com.atarget.atargetbackend.timer.domain.enums.TimeCounterDurationOperation;
 import com.atarget.atargetbackend.timer.domain.enums.TimeCounterType;

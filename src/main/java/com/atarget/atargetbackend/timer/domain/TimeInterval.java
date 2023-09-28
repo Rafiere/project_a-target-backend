@@ -1,6 +1,6 @@
 package com.atarget.atargetbackend.timer.domain;
 
-import com.atarget.atargetbackend.auth.domain.Persona;
+import com.atarget.atargetbackend.persona.domain.Persona;
 import jakarta.persistence.Entity;
 import lombok.Getter;
 import org.springframework.data.jpa.domain.AbstractAuditable;
