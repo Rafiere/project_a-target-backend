@@ -1,23 +1,26 @@
 package com.atarget.atargetbackend.persona.domain;
 
 import com.atarget.atargetbackend.auth.domain.User;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToOne;
+import com.atarget.atargetbackend.shared.audit.BaseAuditableEntity;
+import jakarta.persistence.*;
 import lombok.Getter;
-import org.springframework.data.jpa.domain.AbstractAuditable;
 
-@Entity
+import java.util.UUID;
+
 @Getter
-public class Persona extends AbstractAuditable<Persona, String> {
+@Entity
+public class Persona extends BaseAuditableEntity {
+
+	@Id private String id;
 
 	@OneToOne(cascade = CascadeType.ALL) private PersonalData personalData;
 
-	@OneToOne private User user;
+	@OneToOne(cascade = CascadeType.ALL) private User user;
 
 	public Persona(){}
 
 	private Persona(PersonalData personalData, User user){
+		this.id = UUID.randomUUID().toString();
 		this.personalData = personalData;
 		this.user = user;
 	}
