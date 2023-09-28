@@ -13,7 +13,7 @@ public class VerifyIfTheEmailIsUsedController {
 
 	private final VerifyIfTheEmailIsUsedService service;
 
-	@GetMapping("/auth/email/{email}")
+	@GetMapping("/auth/email2/{email}")
 	public ResponseEntity<Boolean> execute(@PathVariable String email){
 
 		var response = service.execute(email);
