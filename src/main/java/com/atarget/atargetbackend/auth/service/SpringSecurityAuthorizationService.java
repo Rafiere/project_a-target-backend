@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@RequiredArgsConstructor
 @Transactional
+@RequiredArgsConstructor
 public class SpringSecurityAuthorizationService implements UserDetailsService {
 
 	private final PersonaRepository userRepository;
@@ -21,3 +21,4 @@ public class SpringSecurityAuthorizationService implements UserDetailsService {
 		return userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("The email " + email + " was not found."));
 	}
 }
+
