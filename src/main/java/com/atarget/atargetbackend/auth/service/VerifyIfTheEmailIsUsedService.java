@@ -1,5 +1,6 @@
 package com.atarget.atargetbackend.auth.service;
 
+import com.atarget.atargetbackend.auth.service.wrapper.VerifyIfTheEmailIsUsedWrapper;
 import com.atarget.atargetbackend.shared.utils.validation.ShouldThrowAnException;
 import com.atarget.atargetbackend.shared.utils.validation.UserEntityCommonValidationsUtils;
 import lombok.RequiredArgsConstructor;
@@ -13,8 +14,10 @@ public class VerifyIfTheEmailIsUsedService {
 
 	private final UserEntityCommonValidationsUtils userEntityCommonValidationsUtils;
 
-	public Boolean execute(String email){
+	public VerifyIfTheEmailIsUsedWrapper execute(String email){
 
-		return userEntityCommonValidationsUtils.verifyIfEmailIsAlreadyUsed(email, ShouldThrowAnException.DO_NOT_THROW);
+		boolean isEmailUsed = userEntityCommonValidationsUtils.verifyIfEmailIsAlreadyUsed(email, ShouldThrowAnException.DO_NOT_THROW);
+
+		return VerifyIfTheEmailIsUsedWrapper.of(email, isEmailUsed);
 	}
 }
