@@ -1,7 +1,7 @@
 package com.atarget.atargetbackend.persona.service;
 
 import com.atarget.atargetbackend.auth.service.SendTokenForActivateAccountService;
-import com.atarget.atargetbackend.persona.service.wrappers.CreatePersonaWrapper;
+import com.atarget.atargetbackend.persona.service.wrapper.CreatePersonaWrapper;
 import com.atarget.atargetbackend.persona.controller.request.CreatePersonaRequest;
 import com.atarget.atargetbackend.persona.domain.Persona;
 import com.atarget.atargetbackend.persona.domain.PersonalData;
