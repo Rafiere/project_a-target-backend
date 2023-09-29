@@ -8,6 +8,8 @@ import java.util.Optional;
 
 public interface TokenRepository extends JpaRepository<Token, String> {
 
-	@Query("SELECT t FROM Token t WHERE t.tokenText = :tokenText")
+	@Query("SELECT t " +
+	       "FROM Token t " +
+	       "WHERE t.tokenText = :tokenText")
 	Optional<Token> findTokenByTokenText(String tokenText);
 }

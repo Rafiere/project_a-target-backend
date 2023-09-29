@@ -1,16 +1,16 @@
 package com.atarget.atargetbackend.persona.controller.response;
 
-import com.atarget.atargetbackend.persona.domain.Persona;
 import com.atarget.atargetbackend.auth.domain.UserRole;
+import com.atarget.atargetbackend.persona.service.wrappers.CreatePersonaWrapper;
 
 public record CreatePersonaResponse(String id, String nickname, UserRole userRole) {
 
-	public static CreatePersonaResponse from(Persona savedPersona) {
+	public static CreatePersonaResponse from(CreatePersonaWrapper wrapper) {
 
-		return new CreatePersonaResponse(savedPersona.getId(),
-		                                 savedPersona.getPersonalData()
+		return new CreatePersonaResponse(wrapper.persona().getId(),
+		                                 wrapper.persona().getPersonalData()
 		                                             .getNickname(),
-		                                 savedPersona.getUser()
+		                                 wrapper.persona().getUser()
 		                                             .getUserRole());
 	}
 }
