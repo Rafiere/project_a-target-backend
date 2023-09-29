@@ -1,4 +1,4 @@
-package com.atarget.atargetbackend.persona.service.wrappers;
+package com.atarget.atargetbackend.persona.service.wrapper;
 
 import com.atarget.atargetbackend.persona.domain.Persona;
 
