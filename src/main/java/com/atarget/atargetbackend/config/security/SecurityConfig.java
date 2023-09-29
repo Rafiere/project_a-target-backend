@@ -29,9 +29,9 @@ public class SecurityConfig {
 		return http.csrf(AbstractHttpConfigurer::disable)
 		           .sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 		           .authorizeHttpRequests(authorizeHttpRequestsConfig -> {
-			           authorizeHttpRequestsConfig.requestMatchers(HttpMethod.GET, "/docs/swagger-ui")
+			           authorizeHttpRequestsConfig.requestMatchers(HttpMethod.GET, "/auth/**", "/docs/swagger-ui")
 			                                      .permitAll();
-			           authorizeHttpRequestsConfig.requestMatchers(HttpMethod.POST, "/auth/login", "/personas/register")
+			           authorizeHttpRequestsConfig.requestMatchers(HttpMethod.POST, "/auth/**", "/personas/register")
 			                                      .permitAll();
 			           authorizeHttpRequestsConfig.requestMatchers("/admin/**")
 			                                      .hasRole(UserRole.ADMIN.name());

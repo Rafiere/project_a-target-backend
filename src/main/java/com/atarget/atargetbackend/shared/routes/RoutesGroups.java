@@ -2,9 +2,9 @@ package com.atarget.atargetbackend.shared.routes;
 
 public enum RoutesGroups {
 
-	PERSONA("/personas"),
-	TARGET("/targets"),
-	AUTH("/auth");
+	PERSONA("/personas/"),
+	TARGET("/targets/"),
+	AUTH("/auth/");
 
 	private final String path;
 

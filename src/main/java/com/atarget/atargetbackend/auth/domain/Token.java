@@ -2,12 +2,12 @@ package com.atarget.atargetbackend.auth.domain;
 
 import com.atarget.atargetbackend.auth.domain.enums.TokenStatus;
 import com.atarget.atargetbackend.auth.domain.enums.TokenType;
-import com.atarget.atargetbackend.persona.domain.Persona;
 import com.atarget.atargetbackend.shared.audit.BaseAuditableEntity;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
 import lombok.Getter;
-import org.springframework.data.jpa.domain.AbstractAuditable;
 
 import java.security.SecureRandom;
 import java.time.LocalDateTime;
@@ -19,14 +19,13 @@ import java.util.stream.IntStream;
 @Entity
 public class Token extends BaseAuditableEntity {
 
-	@Id private String id;
+	@Id @Getter private String id;
 	@Getter private String tokenText;
 	@Getter private String email;
+	@Enumerated(EnumType.STRING) private TokenType tokenType;
+	@Enumerated(EnumType.STRING) private TokenStatus tokenStatus;
 	private LocalDateTime expirationDate;
-	private TokenType tokenType;
 	private Character charToConcatenateWithToken;
-	private TokenStatus tokenStatus;
-	private String tokenLink;
 
 	public Token() {
 
@@ -39,7 +38,7 @@ public class Token extends BaseAuditableEntity {
 	              TokenType tokenType) {
 
 		this.id = UUID.randomUUID()
-		               .toString();
+		              .toString();
 		this.tokenText = tokenText;
 		this.charToConcatenateWithToken = charToConcatenateWithToken;
 		this.email = email;
@@ -54,8 +53,6 @@ public class Token extends BaseAuditableEntity {
 	                       Integer tokenLength,
 	                       Character charToConcatenateWithToken,
 	                       String concatenateToToken) {
-
-		System.out.println(expirationTimeInSeconds);
 
 		final String tokenText = generateTokenText(tokenLength, charToConcatenateWithToken, concatenateToToken);
 		final LocalDateTime expirationDate = LocalDateTime.now()
@@ -72,7 +69,7 @@ public class Token extends BaseAuditableEntity {
 			                                   " is already used.");
 		}
 
-		if (this.expirationDate.isAfter(LocalDateTime.now()) ||
+		if (this.expirationDate.isBefore(LocalDateTime.now()) ||
 		    this.expirationDate.isEqual(LocalDateTime.now())) {
 			throw new IllegalArgumentException("The token " +
 			                                   this.tokenText +
@@ -139,18 +136,18 @@ public class Token extends BaseAuditableEntity {
 		}
 	}
 
-	public String generateTokenLink(String appUrl) {
+	public String generateTokenLink(String appUrl, String tokenLink) {
 
 		if (!this.tokenType.equals(TokenType.ACTIVATE_ACCOUNT)) {
 
 			return "";
 		}
 
-		this.tokenLink = appUrl +
-		                 "/auth/activate-account/" +
-		                 UUID.randomUUID() +
-		                 this.tokenText;
+		this.id = UUID.randomUUID()
+		              .toString();
 
-		return this.tokenLink;
+		return appUrl +
+		       tokenLink +
+		       this.tokenText;
 	}
 }

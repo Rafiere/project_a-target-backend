@@ -38,8 +38,6 @@ public class SendTokenForActivateAccountService {
 		                                charToConcatenateWithToken,
 		                                personaId);
 
-		tokenRepository.save(generatedToken);
-
 		List<String> emailsToSendTo = List.of(email);
 
 		sendEmailWithJMSComponent.execute("Activate your account!",
@@ -47,5 +45,7 @@ public class SendTokenForActivateAccountService {
 		                                  emailsToSendTo);
 
 		generatedToken.markAsSent();
+
+		tokenRepository.save(generatedToken);
 	}
 }

@@ -10,7 +10,6 @@ import org.thymeleaf.spring6.SpringTemplateEngine;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-import java.util.UUID;
 
 @Component
 @RequiredArgsConstructor
@@ -26,20 +25,12 @@ public class GenerateEmailComponent {
 
 		Map<String, Object> activateEmailAccountVariables = new HashMap<>(Map.of(
 				"name", token.getTokenUserId(),
-				"link", token.generateTokenLink(apiBaseUrl)
+				"link", token.generateTokenLink(apiBaseUrl, "/auth/activate-account/")
 		));
 
 		thymeleafContext.setVariables(activateEmailAccountVariables);
 
 		final String activateAccountEmailTemplateFileName = "activate-account-email-template.html";
 		return templateEngine.process(activateAccountEmailTemplateFileName, thymeleafContext);
-	}
-
-	public static void generateRecoveryPasswordEmailTemplate(){
-
-
-		final Context ctx = new Context(new Locale("br"));
-
-		ctx.setVariable("email", "aaaaaa");
 	}
 }

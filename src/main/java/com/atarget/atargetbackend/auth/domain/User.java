@@ -1,34 +1,38 @@
 package com.atarget.atargetbackend.auth.domain;
 
-import com.atarget.atargetbackend.persona.domain.Persona;
+import com.atarget.atargetbackend.persona.domain.enums.UserAccountStatus;
+import com.atarget.atargetbackend.shared.audit.BaseAuditableEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
-import org.springframework.data.jpa.domain.AbstractAuditable;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Table(name = "users") //To avoid conflict with Postgres default table.
 @Getter
-public class User extends AbstractAuditable<Persona, String> implements UserDetails {
+public class User extends BaseAuditableEntity implements UserDetails {
 
+	@Id private String id;
 	@Column(unique = true) private String email;
 
 	private String password;
 
 	@Enumerated(EnumType.STRING) private UserRole userRole;
+	@Enumerated(EnumType.STRING) private UserAccountStatus userAccountStatus;
 
 	public User() {}
 
 	private User(String email, String password, UserRole userRole) {
-
+		this.id = UUID.randomUUID().toString();
 		this.email = email;
 		this.password = password;
 		this.userRole = userRole;
+		this.userAccountStatus = UserAccountStatus.NOT_ACTIVE;
 	}
 
 	public static User of(String email, String password, UserRole userRole) {
@@ -36,10 +40,19 @@ public class User extends AbstractAuditable<Persona, String> implements UserDeta
 		return new User(email, password, userRole);
 	}
 
-	/***
-	 * Se o usuário for um administrador, ele terá todas as permissões de um usuário comum, somadas com
-	 * as permissões de um administrador. Se ele for apenas um usuário comum, terá apenas as permissões de
-	 * tal.
+	public User activateAccount() {
+
+		this.userAccountStatus = UserAccountStatus.ACTIVATED;
+
+		return this;
+	}
+
+	/**
+	 * <p>If the user is an administrator, he will have all the permissions of a regular user, plus
+	 * as permissions of an administrator. If he is just a regular user, he will only have permissions to
+	 * such.</p>
+	 *
+	 * @return a collection with the user roles.
 	 */
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {

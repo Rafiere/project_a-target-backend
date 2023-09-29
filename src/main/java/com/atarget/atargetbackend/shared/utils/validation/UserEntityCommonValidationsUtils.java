@@ -8,8 +8,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.annotation.Validated;
 
 @Component
-@RequiredArgsConstructor
 @Validated
+@RequiredArgsConstructor
 public class UserEntityCommonValidationsUtils {
 
 	private final PersonaRepository personaRepository;
@@ -17,14 +17,14 @@ public class UserEntityCommonValidationsUtils {
 	public boolean verifyIfEmailIsAlreadyUsed(@Email(message = "The email format is incorrect.") String email,
 	                                          ShouldThrowAnException throwAnExceptionWhenValidationFails) {
 
-		boolean existsAPersonaWithEmail = personaRepository.findByEmail(email)
+		boolean personaWithEmailExists = personaRepository.findByEmail(email)
 		                                                   .isPresent();
 
-		if (existsAPersonaWithEmail &&
+		if (personaWithEmailExists &&
 		    throwAnExceptionWhenValidationFails.equals(ShouldThrowAnException.THROW)) {
 			throw BusinessRuleException.of("The email '" + email + "' is already used.");
 		}
 
-		return existsAPersonaWithEmail;
+		return personaWithEmailExists;
 	}
 }
