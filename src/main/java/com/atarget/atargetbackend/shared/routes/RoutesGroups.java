@@ -8,7 +8,7 @@ public enum RoutesGroups {
 
 	private final String path;
 
-	RoutesGroups(String path){
+	RoutesGroups(final String path){
 		this.path = path;
 	}
 

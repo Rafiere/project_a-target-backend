@@ -4,7 +4,7 @@ import com.atarget.atargetbackend.auth.service.wrapper.VerifyIfTheEmailIsUsedWra
 
 public record VerifyIfTheEmailIsUsedResponse(String email, boolean isUsed) {
 
-	public static VerifyIfTheEmailIsUsedResponse from(VerifyIfTheEmailIsUsedWrapper wrapper){
+	public static VerifyIfTheEmailIsUsedResponse from(final VerifyIfTheEmailIsUsedWrapper wrapper){
 
 		return new VerifyIfTheEmailIsUsedResponse(wrapper.email(), wrapper.isUsed());
 	}

@@ -4,7 +4,6 @@ import com.atarget.atargetbackend.auth.controller.request.UseTokenForRecoveryPas
 import com.atarget.atargetbackend.auth.domain.Token;
 import com.atarget.atargetbackend.auth.domain.User;
 import com.atarget.atargetbackend.auth.repository.TokenRepository;
-import com.atarget.atargetbackend.persona.domain.enums.UserAccountStatus;
 import com.atarget.atargetbackend.persona.repository.UserRepository;
 import com.atarget.atargetbackend.shared.exception.custom.BusinessRuleException;
 import com.atarget.atargetbackend.shared.exception.custom.ResourceNotFoundException;
@@ -24,21 +23,21 @@ public class UseTokenForRecoveryPasswordService {
 
 	public void execute(UseTokenForRecoveryPasswordRequest request, String tokenText){
 
-		Token foundToken = tokenRepository.findTokenByTokenText(tokenText)
+		final Token foundToken = tokenRepository.findTokenByTokenText(tokenText)
 		                                  .orElseThrow(() -> ResourceNotFoundException.of(Resources.TOKEN, tokenText));
 
 		foundToken.validate();
 
-		String tokenOwnerUserEmail = foundToken.getEmail();
+		final String tokenOwnerUserEmail = foundToken.getEmail();
 
-		User user = userRepository.findUserByEmail(tokenOwnerUserEmail)
+		final User user = userRepository.findUserByEmail(tokenOwnerUserEmail)
 		                          .orElseThrow(() -> ResourceNotFoundException.of(Resources.EMAIL, tokenOwnerUserEmail));
 
 		if(!user.isEnabled()){
 			throw BusinessRuleException.of("This account is not activated yet.");
 		}
 
-		String encryptedPassword = SecurityUtils.encryptAPasswordWithBCrypt(request.newPassword());
+		final String encryptedPassword = SecurityUtils.encryptAPasswordWithBCrypt(request.newPassword());
 
 		user.changePassword(encryptedPassword);
 

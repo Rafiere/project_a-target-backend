@@ -8,7 +8,7 @@ public class ThymeleafConfig {
 	@Bean
 	public ResourceBundleMessageSource messageSource(){
 
-		ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
+		final ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
 		messageSource.setBasename("templates");
 
 		return messageSource;

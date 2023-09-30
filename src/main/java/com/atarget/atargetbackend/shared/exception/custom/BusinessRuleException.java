@@ -2,11 +2,11 @@ package com.atarget.atargetbackend.shared.exception.custom;
 
 public class BusinessRuleException extends RuntimeException {
 
-	private BusinessRuleException(String message) {
+	private BusinessRuleException(final String message) {
 		super(message);
 	}
 
-	public static BusinessRuleException of(String message) {
+	public static BusinessRuleException of(final String message) {
 		return new BusinessRuleException(message);
 	}
 }

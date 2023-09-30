@@ -4,7 +4,7 @@ import com.atarget.atargetbackend.shared.exception.custom.enums.Resources;
 
 public class ResourceNotFoundException extends RuntimeException {
 
-	private ResourceNotFoundException(Resources resource, String identifier) {
+	private ResourceNotFoundException(final Resources resource, final String identifier) {
 		super("The resource \"" +
 		      resource +
 		      "\" with the identifier \"" +
@@ -12,7 +12,7 @@ public class ResourceNotFoundException extends RuntimeException {
 		      "\" was not found.");
 	}
 
-	public static ResourceNotFoundException of(Resources resource, String  identifier) {
+	public static ResourceNotFoundException of(final Resources resource, final String  identifier) {
 		return new ResourceNotFoundException(resource, identifier);
 	}
 }

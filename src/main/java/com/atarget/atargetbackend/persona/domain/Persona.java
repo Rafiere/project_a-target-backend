@@ -19,13 +19,13 @@ public class Persona extends BaseAuditableEntity {
 
 	public Persona(){}
 
-	private Persona(PersonalData personalData, User user){
+	private Persona(final PersonalData personalData, final User user){
 		this.id = UUID.randomUUID().toString();
 		this.personalData = personalData;
 		this.user = user;
 	}
 
-	public static Persona of(User user, PersonalData personalData) {
+	public static Persona of(final User user, final PersonalData personalData) {
 		return new Persona(personalData, user);
 	}
 

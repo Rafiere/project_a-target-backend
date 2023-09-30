@@ -14,20 +14,19 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "users") //To avoid conflict with Postgres default table.
-@Getter
 public class User extends BaseAuditableEntity implements UserDetails {
 
-	@Id private String id;
-	@Column(unique = true) private String email;
+	@Getter @Id private String id;
+	@Getter @Column(unique = true) private String email;
 
-	private String password;
+	@Getter private String password;
 
-	@Enumerated(EnumType.STRING) private UserRole userRole;
-	@Enumerated(EnumType.STRING) private UserAccountStatus userAccountStatus;
+	@Getter @Enumerated(EnumType.STRING) private UserRole userRole;
+	@Getter @Enumerated(EnumType.STRING) private UserAccountStatus userAccountStatus;
 
 	public User() {}
 
-	private User(String email, String password, UserRole userRole) {
+	private User(final String email, final String password, final UserRole userRole) {
 		this.id = UUID.randomUUID().toString();
 		this.email = email;
 		this.password = password;
@@ -35,7 +34,7 @@ public class User extends BaseAuditableEntity implements UserDetails {
 		this.userAccountStatus = UserAccountStatus.NOT_ACTIVE;
 	}
 
-	public static User of(String email, String password, UserRole userRole) {
+	public static User of(final String email, final String password, final UserRole userRole) {
 
 		return new User(email, password, userRole);
 	}
@@ -95,7 +94,7 @@ public class User extends BaseAuditableEntity implements UserDetails {
 		return this.getUserAccountStatus().equals(UserAccountStatus.ACTIVATED);
 	}
 
-	public void changePassword(String encryptedPassword) {
+	public void changePassword(final String encryptedPassword) {
 
 		this.password = encryptedPassword;
 	}

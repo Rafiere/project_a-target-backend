@@ -24,9 +24,9 @@ public class SecurityFilter extends OncePerRequestFilter {
 	private final PersonaRepository personaRepository;
 
 	@Override
-	protected void doFilterInternal(HttpServletRequest request,
-	                                HttpServletResponse response,
-	                                FilterChain filterChain) throws ServletException, IOException {
+	protected void doFilterInternal(final HttpServletRequest request,
+	                                final HttpServletResponse response,
+	                                final FilterChain filterChain) throws ServletException, IOException {
 
 		var token = this.recoverToken(request);
 

@@ -13,13 +13,13 @@ public class ApplicationControllerAdvice {
 
 	@ExceptionHandler(ResourceNotFoundException.class)
 	@ResponseStatus(HttpStatus.NOT_FOUND)
-	public CommonExceptionResponse handleResourceNotFoundException(ResourceNotFoundException exception) {
+	public CommonExceptionResponse handleResourceNotFoundException(final ResourceNotFoundException exception) {
 		return CommonExceptionResponse.of(exception.getMessage(), "");
 	}
 
 	@ExceptionHandler(BusinessRuleException.class)
 	@ResponseStatus(HttpStatus.CONFLICT)
-	public CommonExceptionResponse handleBusinessRuleException(BusinessRuleException exception) {
+	public CommonExceptionResponse handleBusinessRuleException(final BusinessRuleException exception) {
 		return CommonExceptionResponse.of(exception.getMessage(), "");
 	}
 }

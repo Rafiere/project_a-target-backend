@@ -1,34 +1,37 @@
 package com.atarget.atargetbackend.target.domain;
 
 import com.atarget.atargetbackend.persona.domain.Persona;
+import com.atarget.atargetbackend.shared.audit.BaseAuditableEntity;
 import com.atarget.atargetbackend.target.domain.enums.MetaType;
 import com.atarget.atargetbackend.target.domain.interfaces.Targetable;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.Id;
 import lombok.Getter;
 import org.springframework.data.jpa.domain.AbstractAuditable;
 
 import java.math.BigDecimal;
 import java.util.UUID;
 
-@Getter
 @Entity
-public class SimpleQuantifierTarget extends AbstractAuditable<Persona, String> implements Targetable {
+public class SimpleQuantifierTarget extends BaseAuditableEntity implements Targetable {
 
-	private String name;
-	private String description;
-	private BigDecimal quantity;
-	private final MetaType metaType = MetaType.SIMPLE_WITH_QUANTIFIER;
+	@Getter @Id private String id;
+	@Getter private String name;
+	@Getter private String description;
+	@Getter private BigDecimal quantity;
+	@Getter @Enumerated private final MetaType metaType = MetaType.SIMPLE_WITH_QUANTIFIER;
 
 	public SimpleQuantifierTarget(){}
 
-	private SimpleQuantifierTarget(String name, String description, BigDecimal quantity){
-		this.setId(UUID.randomUUID().toString());
+	private SimpleQuantifierTarget(final String name, final String description, final BigDecimal quantity){
+		this.id = UUID.randomUUID().toString();
 		this.name = name;
 		this.description = description;
 		this.quantity = quantity;
 	}
 
-	public static SimpleQuantifierTarget of(String name, String description, BigDecimal quantity){
+	public static SimpleQuantifierTarget of(final String name, final String description, final BigDecimal quantity){
 		return new SimpleQuantifierTarget(name, description, quantity);
 	}
 }

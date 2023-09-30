@@ -21,7 +21,7 @@ public class SendEmailWithAngusMailComponent {
 	@Value("${spring.mail.properties.mail.smtp.auth}") private boolean smtpAuth;
 	@Value("${spring.mail.properties.mail.smtp.starttls.enable}") private boolean enableSsl;
 
-	public void execute(String emailSubject, String emailTemplateToSend, List<String> emailsToSendTo) {
+	public void execute(final String emailSubject, final String emailTemplateToSend, final List<String> emailsToSendTo) {
 
 		final JavaMailSenderImpl mailSender = configJavaMailSender();
 
@@ -31,10 +31,10 @@ public class SendEmailWithAngusMailComponent {
 		sendMailMessages(mailSender, mailMessages);
 	}
 
-	private List<MimeMessageHelper> generateMailMessages(JavaMailSenderImpl mailSender,
-	                                               String emailSubject,
-	                                               String emailTemplateToSend,
-	                                               List<String> emailsToSendTo) {
+	private List<MimeMessageHelper> generateMailMessages(final JavaMailSenderImpl mailSender,
+	                                               final String emailSubject,
+	                                               final String emailTemplateToSend,
+	                                               final List<String> emailsToSendTo) {
 
 		return emailsToSendTo.stream()
 		                     .map(emailToSendTo -> generateMailMessage(mailSender,
@@ -44,15 +44,15 @@ public class SendEmailWithAngusMailComponent {
 		                     .toList();
 	}
 
-	public MimeMessageHelper generateMailMessage(JavaMailSenderImpl mailSender,
-	                                       String emailSubject,
-	                                       String emailTemplateToSend,
-	                                       String emailToSendTo) {
+	public MimeMessageHelper generateMailMessage(final JavaMailSenderImpl mailSender,
+	                                       final String emailSubject,
+	                                       final String emailTemplateToSend,
+	                                       final String emailToSendTo) {
 
 		try {
 
 			final MimeMessage mailMessage = mailSender.createMimeMessage();
-			MimeMessageHelper emailHelper = new MimeMessageHelper(mailMessage);
+			final MimeMessageHelper emailHelper = new MimeMessageHelper(mailMessage);
 			emailHelper.setFrom(username);
 			emailHelper.setTo(emailToSendTo);
 			emailHelper.setSubject(emailSubject);
@@ -74,7 +74,7 @@ public class SendEmailWithAngusMailComponent {
 		mailSender.setUsername(username);
 		mailSender.setPassword(password);
 
-		Properties props = mailSender.getJavaMailProperties();
+		final Properties props = mailSender.getJavaMailProperties();
 		props.put("mail.transport.protocol", mailTransportProtocol);
 		props.put("mail.smtp.auth", smtpAuth);
 		props.put("mail.smtp.starttls.enable", enableSsl);
@@ -82,7 +82,7 @@ public class SendEmailWithAngusMailComponent {
 		return mailSender;
 	}
 
-	private void sendMailMessages(JavaMailSenderImpl mailSender, List<MimeMessageHelper> mailMessages) {
+	private void sendMailMessages(final JavaMailSenderImpl mailSender, final List<MimeMessageHelper> mailMessages) {
 
 		mailMessages.forEach(mailMessage -> {
 			try {

@@ -16,7 +16,7 @@ public class SpringSecurityAuthorizationService implements UserDetailsService {
 	private final PersonaRepository userRepository;
 
 	@Override
-	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+	public UserDetails loadUserByUsername(final String email) throws UsernameNotFoundException {
 
 		return userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("The email " + email + " was not found."));
 	}
