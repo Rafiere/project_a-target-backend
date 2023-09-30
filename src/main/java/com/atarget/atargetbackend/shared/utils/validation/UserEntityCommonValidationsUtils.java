@@ -27,4 +27,18 @@ public class UserEntityCommonValidationsUtils {
 
 		return personaWithEmailExists;
 	}
+
+	public boolean verifyIfEmailIsNotUsedYet(@Email(message = "The email format is incorrect.") String email,
+	                                         ShouldThrowAnException throwAnExceptionWhenValidationFails) {
+
+		boolean personaWithEmailExists = personaRepository.findByEmail(email)
+		                                                  .isPresent();
+
+		if (!personaWithEmailExists &&
+		    throwAnExceptionWhenValidationFails.equals(ShouldThrowAnException.THROW)) {
+			throw BusinessRuleException.of("The email '" + email + "' is not used yet.");
+		}
+
+		return personaWithEmailExists;
+	}
 }
