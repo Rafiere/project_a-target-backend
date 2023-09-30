@@ -35,4 +35,19 @@ public class GenerateEmailComponent {
 		final String activateAccountEmailTemplateFileName = "activate-account-email-template.html";
 		return templateEngine.process(activateAccountEmailTemplateFileName, thymeleafContext);
 	}
+
+	public String generateRecoveryPasswordEmailTemplate(Token token, String personaNickname) {
+
+		final Context thymeleafContext = new Context(new Locale("br"));
+
+		Map<String, Object> recoveryPasswordEmailVariables = new HashMap<>(Map.of(
+				"name", personaNickname,
+				"link", token.generateTokenLink(frontendUrl, "/auth/recovery-password/")
+		));
+
+		thymeleafContext.setVariables(recoveryPasswordEmailVariables);
+
+		final String activateAccountEmailTemplateFileName = "recovery-password-email-template.html";
+		return templateEngine.process(activateAccountEmailTemplateFileName, thymeleafContext);
+	}
 }

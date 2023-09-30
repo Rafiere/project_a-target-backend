@@ -3,6 +3,7 @@ package com.atarget.atargetbackend.auth.domain;
 import com.atarget.atargetbackend.auth.domain.enums.TokenStatus;
 import com.atarget.atargetbackend.auth.domain.enums.TokenType;
 import com.atarget.atargetbackend.shared.audit.BaseAuditableEntity;
+import com.atarget.atargetbackend.shared.exception.custom.BusinessRuleException;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -64,16 +65,16 @@ public class Token extends BaseAuditableEntity {
 	public Token validate() {
 
 		if (this.tokenStatus.equals(TokenStatus.USED)) {
-			throw new IllegalArgumentException("The token " +
-			                                   this.tokenText +
-			                                   " is already used.");
+			throw BusinessRuleException.of("The token " +
+			                               this.tokenText +
+			                               " is already used.");
 		}
 
 		if (this.expirationDate.isBefore(LocalDateTime.now()) ||
 		    this.expirationDate.isEqual(LocalDateTime.now())) {
-			throw new IllegalArgumentException("The token " +
-			                                   this.tokenText +
-			                                   " is expired.");
+			throw BusinessRuleException.of("The token " +
+			                               this.tokenText +
+			                               " is expired.");
 		}
 
 		return this;
@@ -91,7 +92,7 @@ public class Token extends BaseAuditableEntity {
 	                                        Character charToConcatenateWithToken,
 	                                        String concatenateToToken) {
 
-		final String POSSIBLE_CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+		final String POSSIBLE_CHARACTERS = "ABCDEFGHIJKLNOPQRSTUVXYZ1234567890";
 		final SecureRandom secureRandom = new SecureRandom();
 
 		String tokenText = IntStream.range(0, tokenLength)
@@ -102,6 +103,11 @@ public class Token extends BaseAuditableEntity {
 		return concatenateToToken ==
 		       null ? tokenText : tokenText.concat(charToConcatenateWithToken.toString())
 		                                   .concat(concatenateToToken);
+	}
+
+	public String getTokenConcatenatedPart() {
+
+		return this.tokenText.split(this.charToConcatenateWithToken.toString())[1];
 	}
 
 	public Token markAsSent() {
