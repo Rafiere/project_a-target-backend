@@ -31,11 +31,11 @@ public class SecurityConfig {
 		return http.csrf(AbstractHttpConfigurer::disable)
 		           .sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 		           .authorizeHttpRequests(authorizeHttpRequestsConfig -> {
-			           authorizeHttpRequestsConfig.requestMatchers(HttpMethod.GET, RoutesGroups.AUTH + "**", "/docs/swagger-ui")
+			           authorizeHttpRequestsConfig.requestMatchers(HttpMethod.GET, RoutesGroups.AUTH.getPath() + "**", "/docs/swagger-ui")
 			                                      .permitAll();
-			           authorizeHttpRequestsConfig.requestMatchers(HttpMethod.POST, RoutesGroups.AUTH + "**", "/personas/register")
+			           authorizeHttpRequestsConfig.requestMatchers(HttpMethod.POST, RoutesGroups.AUTH.getPath() + "**", "/personas/register")
 			                                      .permitAll();
-			           authorizeHttpRequestsConfig.requestMatchers(HttpMethod.PUT, RoutesGroups.AUTH + "**")
+			           authorizeHttpRequestsConfig.requestMatchers(HttpMethod.PUT, RoutesGroups.AUTH.getPath() + "**")
 			                                      .permitAll();
 			           authorizeHttpRequestsConfig.requestMatchers("/admin/**")
 			                                      .hasRole(UserRole.ADMIN.name());
@@ -46,7 +46,7 @@ public class SecurityConfig {
 	}
 
 	@Bean
-	public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+	public AuthenticationManager authenticationManager(final AuthenticationConfiguration authenticationConfiguration) throws Exception {
 
 		return authenticationConfiguration.getAuthenticationManager();
 	}

@@ -3,7 +3,9 @@ package com.atarget.atargetbackend.auth.service;
 import com.atarget.atargetbackend.auth.controller.request.LoginRequest;
 import com.atarget.atargetbackend.auth.controller.response.LoginResponse;
 import com.atarget.atargetbackend.auth.domain.User;
+import com.atarget.atargetbackend.shared.auth.GenerateAuthTokenComponent;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
@@ -15,18 +17,19 @@ import org.springframework.transaction.annotation.Transactional;
 public class LoginService {
 
 	private final AuthenticationManager authenticationManager;
-	private final GenerateTokenService generateTokenService;
+	private final GenerateAuthTokenComponent generateAuthTokenComponent;
 
-//	@Value("${environment.api.security.tokens.access-token.expiration-in-seconds}") private Long accessTokenExpirationInSeconds;
+	@Value("${environment.api.security.tokens.access-token.expiration-in-seconds}") private Long
+			accessTokenExpirationInSeconds;
 
 	public LoginResponse execute(final LoginRequest request) {
 
-		var usernamePassword = new UsernamePasswordAuthenticationToken(request.email(), request.password());
+		final var usernamePassword = new UsernamePasswordAuthenticationToken(request.email(), request.password());
 
-		var auth = this.authenticationManager.authenticate(usernamePassword);
+		final var auth = this.authenticationManager.authenticate(usernamePassword);
 
-		generateTokenService.generateToken((User) auth.getPrincipal());
+		final String generatedAccessToken = generateAuthTokenComponent.generateAccessToken((User) auth.getPrincipal());
 
-		return null;
+		return LoginResponse.of(generatedAccessToken, accessTokenExpirationInSeconds);
 	}
 }
