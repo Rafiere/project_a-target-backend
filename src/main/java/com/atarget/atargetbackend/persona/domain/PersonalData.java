@@ -7,7 +7,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.Email;
 import lombok.Getter;
-import org.springframework.data.jpa.domain.AbstractAuditable;
 
 import java.security.SecureRandom;
 import java.util.UUID;
