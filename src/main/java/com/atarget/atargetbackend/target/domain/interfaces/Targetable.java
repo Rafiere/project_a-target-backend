@@ -9,6 +9,5 @@ public interface Targetable {
 	String getName();
 
 	String getDescription();
-
 	MetaType getMetaType();
 }

@@ -1,5 +1,7 @@
 package com.atarget.atargetbackend.persona.controller.request;
 
-public record UpdatePersonaRequest(String newNickname) {
+import jakarta.validation.constraints.NotBlank;
+
+public record UpdatePersonaRequest(@NotBlank String personaId, @NotBlank String newNickname) {
 
 }
