@@ -28,4 +28,9 @@ public class Persona extends BaseAuditableEntity {
 	public static Persona of(User user, PersonalData personalData) {
 		return new Persona(personalData, user);
 	}
+
+	public String getNickname() {
+		return personalData.getNickname();
+	}
+
 }

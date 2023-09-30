@@ -2,39 +2,59 @@ package com.atarget.atargetbackend.auth.service;
 
 import com.atarget.atargetbackend.auth.domain.Token;
 import com.atarget.atargetbackend.auth.domain.enums.TokenType;
+import com.atarget.atargetbackend.auth.repository.PersonaRepository;
 import com.atarget.atargetbackend.auth.repository.TokenRepository;
+import com.atarget.atargetbackend.persona.domain.Persona;
+import com.atarget.atargetbackend.shared.email.GenerateEmailComponent;
 import com.atarget.atargetbackend.shared.email.SendEmailWithAngusMailComponent;
+import com.atarget.atargetbackend.shared.exception.custom.ResourceNotFoundException;
+import com.atarget.atargetbackend.shared.exception.custom.enums.Resources;
 import com.atarget.atargetbackend.shared.utils.validation.UserEntityCommonValidationsUtils;
 import com.atarget.atargetbackend.shared.utils.validation.ShouldThrowAnException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @Transactional
 @RequiredArgsConstructor
 public class SendTokenForPasswordRecoveryService {
 
+	@Value("${environment.api.security.tokens.recovery-password-token.expiration-in-seconds}") private Integer
+			recoveryPasswordTokenExpirationTimeInSeconds;
+	@Value("${environment.api.security.tokens.recovery-password-token.length}") private Integer
+			recoveryPasswordTokenLength;
+
 	private final TokenRepository tokenRepository;
+	private final PersonaRepository personaRepository;
 	private final UserEntityCommonValidationsUtils userEntityCommonValidationsUtils;
 	private final SendEmailWithAngusMailComponent sendEmailWithJMSComponent;
-	private static final Integer PASSWORD_RECOVERY_TOKEN_EXPIRATION_TIME_IN_MINUTES = 30;
-	private static final Integer PASSWORD_RECOVERY_TOKEN_LENGTH = 5;
+	private final GenerateEmailComponent generateEmailComponent;
 
 	public void execute(String email) {
 
-		userEntityCommonValidationsUtils.verifyIfEmailIsAlreadyUsed(email, ShouldThrowAnException.THROW);
+		userEntityCommonValidationsUtils.verifyIfEmailIsNotUsedYet(email, ShouldThrowAnException.THROW);
 
 		Token generatedTokenText = Token.of(email,
-		                                    PASSWORD_RECOVERY_TOKEN_EXPIRATION_TIME_IN_MINUTES,
+		                                    recoveryPasswordTokenExpirationTimeInSeconds,
 		                                    TokenType.PASSWORD_RECOVERY,
-		                                    PASSWORD_RECOVERY_TOKEN_LENGTH,
-		                                    '@',
-		                                    email);
+		                                    recoveryPasswordTokenLength,
+		                                    null,
+		                                    null);
 
 		Token savedToken = tokenRepository.save(generatedTokenText);
 
-//		sendEmailWithJMSComponent.execute("");
+		Persona persona = personaRepository.findPersonaByEmail(email)
+		                                   .orElseThrow(() -> ResourceNotFoundException.of(Resources.EMAIL, savedToken.getEmail()));
+
+		String emailTemplate = generateEmailComponent.generateRecoveryPasswordEmailTemplate(savedToken, persona.getNickname());
+
+		List<String> emailsToSendTo = List.of(savedToken.getEmail());
+
+		sendEmailWithJMSComponent.execute("Recovery your password!", emailTemplate, emailsToSendTo);
 
 		savedToken.markAsSent();
 	}
