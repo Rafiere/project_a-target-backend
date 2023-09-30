@@ -28,7 +28,7 @@ public class CreatePersonaService {
 
 		userEntityCommonValidationsUtils.verifyIfEmailIsAlreadyUsed(request.email(), ShouldThrowAnException.THROW);
 
-		String encryptedPassword = SecurityUtils.encryptAPassword(request.password());
+		String encryptedPassword = SecurityUtils.encryptAPasswordWithBCrypt(request.password());
 
 		var user = User.of(request.email(), encryptedPassword, UserRole.COMMON_USER);
 

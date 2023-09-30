@@ -23,6 +23,7 @@ public class SecurityConfig {
 
 	private final SecurityFilter securityFilter;
 
+
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
@@ -32,6 +33,8 @@ public class SecurityConfig {
 			           authorizeHttpRequestsConfig.requestMatchers(HttpMethod.GET, "/auth/**", "/docs/swagger-ui")
 			                                      .permitAll();
 			           authorizeHttpRequestsConfig.requestMatchers(HttpMethod.POST, "/auth/**", "/personas/register")
+			                                      .permitAll();
+			           authorizeHttpRequestsConfig.requestMatchers(HttpMethod.PUT, "/auth/**")
 			                                      .permitAll();
 			           authorizeHttpRequestsConfig.requestMatchers("/admin/**")
 			                                      .hasRole(UserRole.ADMIN.name());

@@ -16,6 +16,8 @@ import java.util.Map;
 public class GenerateEmailComponent {
 
 	@Value("${environment.api.base-url}") String apiBaseUrl;
+	@Value("${environment.api.port}") String apiPort;
+	@Value("${environment.front-end.url}") String frontendUrl;
 	private final SpringTemplateEngine templateEngine;
 
 
@@ -23,14 +25,29 @@ public class GenerateEmailComponent {
 
 		final Context thymeleafContext = new Context(new Locale("br"));
 
-		Map<String, Object> activateEmailAccountVariables = new HashMap<>(Map.of(
+		Map<String, Object> activateAccountEmailVariables = new HashMap<>(Map.of(
 				"name", token.getTokenUserId(),
-				"link", token.generateTokenLink(apiBaseUrl, "/auth/activate-account/")
+				"link", token.generateTokenLink(apiBaseUrl + apiPort, "/auth/activate-account/")
 		));
 
-		thymeleafContext.setVariables(activateEmailAccountVariables);
+		thymeleafContext.setVariables(activateAccountEmailVariables);
 
 		final String activateAccountEmailTemplateFileName = "activate-account-email-template.html";
+		return templateEngine.process(activateAccountEmailTemplateFileName, thymeleafContext);
+	}
+
+	public String generateRecoveryPasswordEmailTemplate(Token token, String personaNickname) {
+
+		final Context thymeleafContext = new Context(new Locale("br"));
+
+		Map<String, Object> recoveryPasswordEmailVariables = new HashMap<>(Map.of(
+				"name", personaNickname,
+				"link", token.generateTokenLink(frontendUrl, "/auth/recovery-password/")
+		));
+
+		thymeleafContext.setVariables(recoveryPasswordEmailVariables);
+
+		final String activateAccountEmailTemplateFileName = "recovery-password-email-template.html";
 		return templateEngine.process(activateAccountEmailTemplateFileName, thymeleafContext);
 	}
 }

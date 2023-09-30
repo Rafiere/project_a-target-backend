@@ -9,8 +9,13 @@ import java.util.Optional;
 
 public interface PersonaRepository extends JpaRepository<Persona, String> {
 
-	@Query("SELECT p.user " +
+	@Query("SELECT u " +
+	       "FROM User u " +
+	       "WHERE u.email = :email")
+	Optional<UserDetails> findByEmail(String email);
+
+	@Query("SELECT p " +
 	       "FROM Persona p " +
 	       "WHERE p.user.email = :email")
-	Optional<UserDetails> findByEmail(String email);
+	Optional<Persona> findPersonaByEmail(String email);
 }

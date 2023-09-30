@@ -92,6 +92,11 @@ public class User extends BaseAuditableEntity implements UserDetails {
 	@Override
 	public boolean isEnabled() {
 
-		return true;
+		return this.getUserAccountStatus().equals(UserAccountStatus.ACTIVATED);
+	}
+
+	public void changePassword(String encryptedPassword) {
+
+		this.password = encryptedPassword;
 	}
 }
