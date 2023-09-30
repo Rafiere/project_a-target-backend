@@ -138,13 +138,10 @@ public class Token extends BaseAuditableEntity {
 
 	public String generateTokenLink(String appUrl, String tokenLink) {
 
-		if (!this.tokenType.equals(TokenType.ACTIVATE_ACCOUNT)) {
+		if (!(this.tokenType.equals(TokenType.ACTIVATE_ACCOUNT) || this.tokenType.equals(TokenType.PASSWORD_RECOVERY))) {
 
 			return "";
 		}
-
-		this.id = UUID.randomUUID()
-		              .toString();
 
 		return appUrl +
 		       tokenLink +
