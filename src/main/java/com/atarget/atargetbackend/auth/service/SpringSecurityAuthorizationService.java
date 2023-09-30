@@ -1,6 +1,8 @@
 package com.atarget.atargetbackend.auth.service;
 
 import com.atarget.atargetbackend.auth.repository.PersonaRepository;
+import com.atarget.atargetbackend.shared.exception.custom.ResourceNotFoundException;
+import com.atarget.atargetbackend.shared.exception.custom.enums.Resources;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -18,7 +20,7 @@ public class SpringSecurityAuthorizationService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(final String email) throws UsernameNotFoundException {
 
-		return userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("The email " + email + " was not found."));
+		return userRepository.findByEmail(email).orElseThrow(() -> ResourceNotFoundException.of(Resources.EMAIL, email));
 	}
 }
 
