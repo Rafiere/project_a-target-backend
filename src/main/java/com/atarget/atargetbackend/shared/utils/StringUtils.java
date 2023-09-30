@@ -12,7 +12,7 @@ public class StringUtils {
 	 *
 	 * @return the local-part of the email.
 	 */
-	public static String getEmailLocalPart(@Email String email) {
+	public static String getEmailLocalPart(final @Email String email) {
 
 		return email.split("@")[0];
 	}

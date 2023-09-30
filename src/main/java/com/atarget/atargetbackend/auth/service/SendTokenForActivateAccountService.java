@@ -29,16 +29,16 @@ public class SendTokenForActivateAccountService {
 	@Value("${environment.api.security.tokens.activate-account-token.char-to-concatenate-with-token}") private Character
 			charToConcatenateWithToken;
 
-	public void execute(@Email String email, String personaId) {
+	public void execute(final @Email String email, final String personaId) {
 
-		Token generatedToken = Token.of(email,
+		final Token generatedToken = Token.of(email,
 		                                activateAccountTokenExpirationTimeInSeconds,
 		                                TokenType.ACTIVATE_ACCOUNT,
 		                                activateAccountTokenLength,
 		                                charToConcatenateWithToken,
 		                                personaId);
 
-		List<String> emailsToSendTo = List.of(email);
+		final List<String> emailsToSendTo = List.of(email);
 
 		sendEmailWithJMSComponent.execute("Activate your account!",
 		                                  generateEmailComponent.generateActivateAccountEmailTemplate(generatedToken),

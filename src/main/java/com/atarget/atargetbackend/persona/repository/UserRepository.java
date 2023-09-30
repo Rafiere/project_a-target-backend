@@ -14,7 +14,7 @@ public interface UserRepository extends JpaRepository<User, String> {
 	       "WHERE p.user.email = :email")
 	Optional<Persona> findPersonaByEmail(String email);
 
-	Boolean existsUserByEmail(String email);
+	boolean existsUserByEmail(String email);
 
 	@Query("SELECT u FROM User u WHERE u.email = :tokenOwnerUserEmail")
 	Optional<User> findUserByEmail(String tokenOwnerUserEmail);

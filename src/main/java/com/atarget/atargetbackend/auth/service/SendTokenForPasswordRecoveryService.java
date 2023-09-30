@@ -34,25 +34,25 @@ public class SendTokenForPasswordRecoveryService {
 	private final SendEmailWithAngusMailComponent sendEmailWithJMSComponent;
 	private final GenerateEmailComponent generateEmailComponent;
 
-	public void execute(String email) {
+	public void execute(final String email) {
 
 		userEntityCommonValidationsUtils.verifyIfEmailIsNotUsedYet(email, ShouldThrowAnException.THROW);
 
-		Token generatedTokenText = Token.of(email,
+		final Token generatedTokenText = Token.of(email,
 		                                    recoveryPasswordTokenExpirationTimeInSeconds,
 		                                    TokenType.PASSWORD_RECOVERY,
 		                                    recoveryPasswordTokenLength,
 		                                    null,
 		                                    null);
 
-		Token savedToken = tokenRepository.save(generatedTokenText);
+		final Token savedToken = tokenRepository.save(generatedTokenText);
 
-		Persona persona = personaRepository.findPersonaByEmail(email)
+		final Persona persona = personaRepository.findPersonaByEmail(email)
 		                                   .orElseThrow(() -> ResourceNotFoundException.of(Resources.EMAIL, savedToken.getEmail()));
 
-		String emailTemplate = generateEmailComponent.generateRecoveryPasswordEmailTemplate(savedToken, persona.getNickname());
+		final String emailTemplate = generateEmailComponent.generateRecoveryPasswordEmailTemplate(savedToken, persona.getNickname());
 
-		List<String> emailsToSendTo = List.of(savedToken.getEmail());
+		final List<String> emailsToSendTo = List.of(savedToken.getEmail());
 
 		sendEmailWithJMSComponent.execute("Recovery your password!", emailTemplate, emailsToSendTo);
 

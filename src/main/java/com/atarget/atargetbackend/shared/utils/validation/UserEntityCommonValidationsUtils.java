@@ -14,10 +14,10 @@ public class UserEntityCommonValidationsUtils {
 
 	private final PersonaRepository personaRepository;
 
-	public boolean verifyIfEmailIsAlreadyUsed(@Email(message = "The email format is incorrect.") String email,
-	                                          ShouldThrowAnException throwAnExceptionWhenValidationFails) {
+	public boolean verifyIfEmailIsAlreadyUsed(final @Email(message = "The email format is incorrect.") String email,
+	                                          final ShouldThrowAnException throwAnExceptionWhenValidationFails) {
 
-		boolean personaWithEmailExists = personaRepository.findByEmail(email)
+		final boolean personaWithEmailExists = personaRepository.findByEmail(email)
 		                                                   .isPresent();
 
 		if (personaWithEmailExists &&
@@ -28,10 +28,10 @@ public class UserEntityCommonValidationsUtils {
 		return personaWithEmailExists;
 	}
 
-	public boolean verifyIfEmailIsNotUsedYet(@Email(message = "The email format is incorrect.") String email,
-	                                         ShouldThrowAnException throwAnExceptionWhenValidationFails) {
+	public boolean verifyIfEmailIsNotUsedYet(final @Email(message = "The email format is incorrect.") String email,
+	                                         final ShouldThrowAnException throwAnExceptionWhenValidationFails) {
 
-		boolean personaWithEmailExists = personaRepository.findByEmail(email)
+		final boolean personaWithEmailExists = personaRepository.findByEmail(email)
 		                                                  .isPresent();
 
 		if (!personaWithEmailExists &&

@@ -13,6 +13,6 @@ public record CreateTimeCounterResponse(String id, String name, String timerCoun
 				createdTimeCounter.getName(),
 				createdTimeCounter.getTimeCounterType().name(),
 				createdTimeCounter.getTimeCounterMethod().name(),
-				createdTimeCounter.getCreatedDate().orElse(null));
+				createdTimeCounter.getCreatedDate());
 	}
 }

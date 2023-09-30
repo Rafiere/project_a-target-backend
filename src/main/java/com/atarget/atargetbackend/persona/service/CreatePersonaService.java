@@ -24,19 +24,19 @@ public class CreatePersonaService {
 	private final UserEntityCommonValidationsUtils userEntityCommonValidationsUtils;
 	private final SendTokenForActivateAccountService sendTokenForActivateAccountService;
 
-	public CreatePersonaWrapper execute(CreatePersonaRequest request) {
+	public CreatePersonaWrapper execute(final CreatePersonaRequest request) {
 
 		userEntityCommonValidationsUtils.verifyIfEmailIsAlreadyUsed(request.email(), ShouldThrowAnException.THROW);
 
-		String encryptedPassword = SecurityUtils.encryptAPasswordWithBCrypt(request.password());
+		final String encryptedPassword = SecurityUtils.encryptAPasswordWithBCrypt(request.password());
 
-		var user = User.of(request.email(), encryptedPassword, UserRole.COMMON_USER);
+		final var user = User.of(request.email(), encryptedPassword, UserRole.COMMON_USER);
 
-		var personalData = PersonalData.of(PersonalData.generateFirstAccountNickname(request.email()));
+		final var personalData = PersonalData.of(PersonalData.generateFirstAccountNickname(request.email()));
 
-		var createdPersona = Persona.of(user, personalData);
+		final var createdPersona = Persona.of(user, personalData);
 
-		Persona savedPersona = personaRepository.save(createdPersona);
+		final Persona savedPersona = personaRepository.save(createdPersona);
 
 		sendTokenForActivateAccountService.execute(request.email(), createdPersona.getPersonalData()
 		                                                                          .getNickname());

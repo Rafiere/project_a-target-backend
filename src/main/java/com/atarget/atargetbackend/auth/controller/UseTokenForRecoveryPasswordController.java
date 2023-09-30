@@ -18,8 +18,8 @@ public class UseTokenForRecoveryPasswordController {
 	private final UseTokenForRecoveryPasswordService useTokenForRecoveryPasswordService;
 
 	@PutMapping(path = "/auth/recovery-password/{token}", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Void> execute(@Valid @RequestBody UseTokenForRecoveryPasswordRequest request,
-	                                    @NotBlank @PathVariable String token) {
+	public ResponseEntity<Void> execute(final @Valid @RequestBody UseTokenForRecoveryPasswordRequest request,
+	                                    final @NotBlank @PathVariable String token) {
 
 		useTokenForRecoveryPasswordService.execute(request, token);
 

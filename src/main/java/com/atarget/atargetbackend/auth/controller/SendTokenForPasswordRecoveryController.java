@@ -18,7 +18,7 @@ public class SendTokenForPasswordRecoveryController {
 	private final SendTokenForPasswordRecoveryService service;
 
 	@GetMapping("/auth/recovery-password/{email}")
-	public ResponseEntity<Void> execute(@Email(message = "The email format is incorrect.") @NotBlank @PathVariable String email){
+	public ResponseEntity<Void> execute(final @Email(message = "The email format is incorrect.") @NotBlank @PathVariable String email){
 
 		service.execute(email);
 

@@ -1,25 +1,25 @@
 package com.atarget.atargetbackend.timer.domain;
 
-import com.atarget.atargetbackend.persona.domain.Persona;
+import com.atarget.atargetbackend.shared.audit.BaseAuditableEntity;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import lombok.Getter;
-import org.springframework.data.jpa.domain.AbstractAuditable;
 
 import java.time.Duration;
 import java.util.UUID;
 
-@Getter
 @Entity
-public class TimeInterval extends AbstractAuditable<Persona, String> {
+public class TimeInterval extends BaseAuditableEntity {
 
-	private String name;
-	private String description;
-	private Duration duration;
+	@Getter @Id private String id;
+	@Getter private String name;
+	@Getter private String description;
+	@Getter private Duration duration;
 
 	public TimeInterval(){}
 
 	private TimeInterval(final Duration duration){
-		this.setId(UUID.randomUUID().toString());
+		this.id = UUID.randomUUID().toString();
 		this.duration = duration;
 	}
 
@@ -27,7 +27,7 @@ public class TimeInterval extends AbstractAuditable<Persona, String> {
 		return new TimeInterval(duration);
 	}
 
-	public void updateTimeInterval(String newName, String newDescription) {
+	public void updateTimeInterval(final String newName, final String newDescription) {
 		if(newName != null && !newName.isBlank()){
 
 			this.name = newName;

@@ -16,7 +16,7 @@ public class VerifyIfTheEmailIsUsedService {
 
 	public VerifyIfTheEmailIsUsedWrapper execute(String email){
 
-		boolean isEmailUsed = userEntityCommonValidationsUtils.verifyIfEmailIsAlreadyUsed(email, ShouldThrowAnException.DO_NOT_THROW);
+		final boolean isEmailUsed = userEntityCommonValidationsUtils.verifyIfEmailIsAlreadyUsed(email, ShouldThrowAnException.DO_NOT_THROW);
 
 		return VerifyIfTheEmailIsUsedWrapper.of(email, isEmailUsed);
 	}

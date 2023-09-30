@@ -32,11 +32,11 @@ public class Token extends BaseAuditableEntity {
 
 	}
 
-	private Token(String tokenText,
-	              Character charToConcatenateWithToken,
-	              String email,
-	              LocalDateTime expirationDate,
-	              TokenType tokenType) {
+	private Token(final String tokenText,
+	              final Character charToConcatenateWithToken,
+	              final String email,
+	              final LocalDateTime expirationDate,
+	              final TokenType tokenType) {
 
 		this.id = UUID.randomUUID()
 		              .toString();
@@ -48,12 +48,12 @@ public class Token extends BaseAuditableEntity {
 		this.tokenStatus = TokenStatus.CREATED;
 	}
 
-	public static Token of(String email,
-	                       Integer expirationTimeInSeconds,
-	                       TokenType tokenType,
-	                       Integer tokenLength,
-	                       Character charToConcatenateWithToken,
-	                       String concatenateToToken) {
+	public static Token of(final String email,
+	                       final Integer expirationTimeInSeconds,
+	                       final TokenType tokenType,
+	                       final Integer tokenLength,
+	                       final Character charToConcatenateWithToken,
+	                       final String concatenateToToken) {
 
 		final String tokenText = generateTokenText(tokenLength, charToConcatenateWithToken, concatenateToToken);
 		final LocalDateTime expirationDate = LocalDateTime.now()
@@ -88,14 +88,14 @@ public class Token extends BaseAuditableEntity {
 	 * @param charToConcatenateWithToken the character to indicate the start of the concatenation between token text and {@code concatenateToToken}
 	 * @return the generated token text
 	 */
-	private static String generateTokenText(Integer tokenLength,
-	                                        Character charToConcatenateWithToken,
-	                                        String concatenateToToken) {
+	private static String generateTokenText(final Integer tokenLength,
+	                                        final Character charToConcatenateWithToken,
+	                                        final String concatenateToToken) {
 
 		final String POSSIBLE_CHARACTERS = "ABCDEFGHIJKLNOPQRSTUVXYZ1234567890";
 		final SecureRandom secureRandom = new SecureRandom();
 
-		String tokenText = IntStream.range(0, tokenLength)
+		final String tokenText = IntStream.range(0, tokenLength)
 		                            .mapToObj(i -> POSSIBLE_CHARACTERS.charAt(secureRandom.nextInt(POSSIBLE_CHARACTERS.length())))
 		                            .map(Objects::toString)
 		                            .collect(Collectors.joining());
@@ -133,7 +133,7 @@ public class Token extends BaseAuditableEntity {
 		return this.tokenText.split(this.charToConcatenateWithToken.toString())[1];
 	}
 
-	public void validateGivenEmailWithTokenEmail(String givenEmail) {
+	public void validateGivenEmailWithTokenEmail(final String givenEmail) {
 
 		if (!givenEmail.equals(this.email)) {
 			throw new IllegalArgumentException("The email " +
@@ -142,7 +142,7 @@ public class Token extends BaseAuditableEntity {
 		}
 	}
 
-	public String generateTokenLink(String appUrl, String tokenLink) {
+	public String generateTokenLink(final String appUrl, final String tokenLink) {
 
 		if (!(this.tokenType.equals(TokenType.ACTIVATE_ACCOUNT) || this.tokenType.equals(TokenType.PASSWORD_RECOVERY))) {
 

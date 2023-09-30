@@ -15,17 +15,18 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class GenerateEmailComponent {
 
+	private final SpringTemplateEngine templateEngine;
+
 	@Value("${environment.api.base-url}") String apiBaseUrl;
 	@Value("${environment.api.port}") String apiPort;
 	@Value("${environment.front-end.url}") String frontendUrl;
-	private final SpringTemplateEngine templateEngine;
 
 
-	public String generateActivateAccountEmailTemplate(Token token) {
+	public String generateActivateAccountEmailTemplate(final Token token) {
 
 		final Context thymeleafContext = new Context(new Locale("br"));
 
-		Map<String, Object> activateAccountEmailVariables = new HashMap<>(Map.of(
+		final Map<String, Object> activateAccountEmailVariables = new HashMap<>(Map.of(
 				"name", token.getTokenUserId(),
 				"link", token.generateTokenLink(apiBaseUrl + apiPort, "/auth/activate-account/")
 		));
@@ -36,11 +37,11 @@ public class GenerateEmailComponent {
 		return templateEngine.process(activateAccountEmailTemplateFileName, thymeleafContext);
 	}
 
-	public String generateRecoveryPasswordEmailTemplate(Token token, String personaNickname) {
+	public String generateRecoveryPasswordEmailTemplate(final Token token, final String personaNickname) {
 
 		final Context thymeleafContext = new Context(new Locale("br"));
 
-		Map<String, Object> recoveryPasswordEmailVariables = new HashMap<>(Map.of(
+		final Map<String, Object> recoveryPasswordEmailVariables = new HashMap<>(Map.of(
 				"name", personaNickname,
 				"link", token.generateTokenLink(frontendUrl, "/auth/recovery-password/")
 		));

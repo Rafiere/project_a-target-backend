@@ -12,21 +12,20 @@ import java.security.SecureRandom;
 import java.util.UUID;
 
 @Entity
-@Getter
 public class PersonalData extends BaseAuditableEntity {
 
-	@Id private String id;
-	private String nickname;
-	@Embedded private Avatar avatar;
+	@Getter @Id private String id;
+	@Getter private String nickname;
+	@Getter @Embedded private Avatar avatar;
 
 	public PersonalData(){}
 
-	private PersonalData(String nickname) {
+	private PersonalData(final String nickname) {
 		this.id = UUID.randomUUID().toString();
 		this.nickname = nickname;
 	}
 
-	public static PersonalData of(String nickname) {
+	public static PersonalData of(final String nickname) {
 		return new PersonalData(nickname);
 	}
 
@@ -36,7 +35,7 @@ public class PersonalData extends BaseAuditableEntity {
 	 * @param email the email of the user.
 	 * @return the account first nickname
 	 */
-	public static String generateFirstAccountNickname(@Email String email) {
+	public static String generateFirstAccountNickname(final @Email String email) {
 
 		var stringBuilder = new StringBuilder();
 

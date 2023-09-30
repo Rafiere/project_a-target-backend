@@ -5,17 +5,15 @@ import lombok.Getter;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
 @Getter
 @MappedSuperclass
-@EntityListeners(AuditingEntityListener.class)
 public abstract class BaseAuditableEntity {
 
 	@CreatedBy private String createdBy;
-	@CreatedDate private LocalDateTime createdDate = LocalDateTime.now();
+	@CreatedDate private final LocalDateTime createdDate = LocalDateTime.now();
 	@LastModifiedDate private LocalDateTime updatedAt;
 }
 
