@@ -14,7 +14,7 @@ public class ManipulateAuthTokenComponent {
 	@Value("${environment.api.security.tokens.access-token.secret}") private String accessTokenSecret;
 	@Value("${environment.api.security.tokens.refresh-token.secret}") private String refreshTokenSecret;
 
-	public DecodedJWT validate(final AuthTokenType authTokenType, String token) {
+	public DecodedJWT validate(final AuthTokenType authTokenType, final String token) {
 
 		return switch (authTokenType) {
 			case ACCESS_TOKEN -> validateAccessToken(token);
@@ -22,9 +22,9 @@ public class ManipulateAuthTokenComponent {
 		};
 	}
 
-	private DecodedJWT validateRefreshToken(String token) {
+	private DecodedJWT validateAccessToken(final String token) {
 
-		final Algorithm algorithm = Algorithm.HMAC512(refreshTokenSecret);
+		final Algorithm algorithm = Algorithm.HMAC256(accessTokenSecret);
 
 		return JWT.require(algorithm)
 		          .withIssuer(appName)
@@ -32,9 +32,9 @@ public class ManipulateAuthTokenComponent {
 		          .verify(token);
 	}
 
-	private DecodedJWT validateAccessToken(final String token) {
+	private DecodedJWT validateRefreshToken(final String token) {
 
-		final Algorithm algorithm = Algorithm.HMAC512(accessTokenSecret);
+		final Algorithm algorithm = Algorithm.HMAC256(refreshTokenSecret);
 
 		return JWT.require(algorithm)
 		          .withIssuer(appName)
