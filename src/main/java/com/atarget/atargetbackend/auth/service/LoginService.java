@@ -3,6 +3,7 @@ package com.atarget.atargetbackend.auth.service;
 import com.atarget.atargetbackend.auth.controller.request.LoginRequest;
 import com.atarget.atargetbackend.auth.controller.response.LoginResponse;
 import com.atarget.atargetbackend.auth.domain.User;
+import com.atarget.atargetbackend.auth.service.wrapper.LoginWrapper;
 import com.atarget.atargetbackend.shared.auth.GenerateAuthTokenComponent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,7 +25,7 @@ public class LoginService {
 
 	@Value("${environment.api.security.tokens.refresh-token.expiration-in-seconds}") private Long refreshTokenExpirationInSeconds;
 
-	public LoginResponse execute(final LoginRequest request) {
+	public LoginWrapper execute(final LoginRequest request) {
 
 		final var usernamePassword = new UsernamePasswordAuthenticationToken(request.email(), request.password());
 
@@ -33,6 +34,6 @@ public class LoginService {
 		final String generatedAccessToken = generateAuthTokenComponent.generateAccessToken((User) auth.getPrincipal());
 		final String generatedRefreshToken = generateAuthTokenComponent.generateRefreshToken((User) auth.getPrincipal());
 
-		return LoginResponse.of(generatedAccessToken, accessTokenExpirationInSeconds, generatedRefreshToken, refreshTokenExpirationInSeconds);
+		return LoginWrapper.of(generatedAccessToken, accessTokenExpirationInSeconds, generatedRefreshToken, refreshTokenExpirationInSeconds);
 	}
 }

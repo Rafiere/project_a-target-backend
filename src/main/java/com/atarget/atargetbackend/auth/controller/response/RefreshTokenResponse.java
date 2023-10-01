@@ -1,11 +1,14 @@
 package com.atarget.atargetbackend.auth.controller.response;
 
+import com.atarget.atargetbackend.auth.service.wrapper.LoginWrapper;
 import com.atarget.atargetbackend.shared.auth.enums.AuthTokenType;
 
 public record RefreshTokenResponse(String refreshToken, AuthTokenType tokenType, Long expirationInSeconds) {
 
-	public static RefreshTokenResponse of(final String refreshToken, final Long expirationInSeconds) {
+	public static RefreshTokenResponse from(final LoginWrapper loginWrapper) {
 
-		return new RefreshTokenResponse(refreshToken, AuthTokenType.REFRESH_TOKEN, expirationInSeconds);
+		return new RefreshTokenResponse(loginWrapper.generatedRefreshToken(),
+		                                AuthTokenType.REFRESH_TOKEN,
+		                                loginWrapper.refreshTokenExpirationInSeconds());
 	}
 }
