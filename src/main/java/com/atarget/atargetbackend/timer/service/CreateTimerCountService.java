@@ -9,15 +9,17 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@RequiredArgsConstructor
 @Transactional
+@RequiredArgsConstructor
 public class CreateTimerCountService {
 
-	private TimeCounterRepository timeCounterRepository;
+	private final TimeCounterRepository timeCounterRepository;
 
-	public CreateTimeCounterResponse execute(CreateTimeCounterRequest request) {
+	public CreateTimeCounterResponse execute(final CreateTimeCounterRequest request) {
 
-		TimeCounter createdTimeCounter =
+		//TODO: Criar wrappers e implementar lógica de acordo com o tipo de timecounter que for criado.
+
+		final TimeCounter createdTimeCounter =
 				TimeCounter.of(request.name(), request.description(), request.timeCounterType(), request.timeCounterMethod());
 
 		timeCounterRepository.save(createdTimeCounter);

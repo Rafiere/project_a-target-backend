@@ -2,6 +2,7 @@ package com.atarget.atargetbackend.auth.service;
 
 import com.atarget.atargetbackend.auth.controller.response.AccessTokenResponse;
 import com.atarget.atargetbackend.auth.domain.User;
+import com.atarget.atargetbackend.auth.service.wrapper.RenewAccessTokenWithRefreshTokenWrapper;
 import com.atarget.atargetbackend.persona.repository.UserRepository;
 import com.atarget.atargetbackend.shared.auth.GenerateAuthTokenComponent;
 import com.atarget.atargetbackend.shared.auth.ManipulateAuthTokenComponent;
@@ -23,7 +24,7 @@ public class RenewAccessTokenWithRefreshTokenService {
 	@Value("${environment.api.security.tokens.access-token.expiration-in-seconds}") private Long
 			accessTokenExpirationInSeconds;
 
-		public AccessTokenResponse execute(final String refreshToken) {
+		public RenewAccessTokenWithRefreshTokenWrapper execute(final String refreshToken) {
 
 		final var validatedJWT = manipulateAuthTokenComponent.validate(AuthTokenType.REFRESH_TOKEN, refreshToken);
 
@@ -33,6 +34,6 @@ public class RenewAccessTokenWithRefreshTokenService {
 
 		final String newAccessToken = generateAuthTokenComponent.generateAccessToken(user);
 
-		return AccessTokenResponse.of(newAccessToken, accessTokenExpirationInSeconds);
+		return RenewAccessTokenWithRefreshTokenWrapper.of(newAccessToken, accessTokenExpirationInSeconds);
 	}
 }

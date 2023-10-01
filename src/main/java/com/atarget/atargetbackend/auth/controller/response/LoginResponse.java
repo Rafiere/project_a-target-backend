@@ -1,13 +1,12 @@
 package com.atarget.atargetbackend.auth.controller.response;
 
+import com.atarget.atargetbackend.auth.service.wrapper.LoginWrapper;
+
 public record LoginResponse(AccessTokenResponse accessTokenResponse, RefreshTokenResponse refreshTokenResponse) {
 
-	public static LoginResponse of(final String accessToken,
-	                               final Long accessTokenExpirationInSeconds,
-	                               final String refreshToken,
-	                               final Long refreshTokenExpirationInSeconds) {
+	public static LoginResponse from(final LoginWrapper loginWrapper){
 
-		return new LoginResponse(AccessTokenResponse.of(accessToken, accessTokenExpirationInSeconds),
-		                         RefreshTokenResponse.of(refreshToken, refreshTokenExpirationInSeconds));
+		return new LoginResponse(AccessTokenResponse.from(loginWrapper),
+		                         RefreshTokenResponse.from(loginWrapper));
 	}
 }
