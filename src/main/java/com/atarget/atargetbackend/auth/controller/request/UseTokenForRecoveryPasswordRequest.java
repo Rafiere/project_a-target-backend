@@ -1,5 +1,7 @@
 package com.atarget.atargetbackend.auth.controller.request;
 
-public record UseTokenForRecoveryPasswordRequest(String newPassword) {
+import jakarta.validation.constraints.NotBlank;
+
+public record UseTokenForRecoveryPasswordRequest(@NotBlank String newPassword) {
 
 }
