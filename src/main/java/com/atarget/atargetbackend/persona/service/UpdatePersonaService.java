@@ -3,6 +3,7 @@ package com.atarget.atargetbackend.persona.service;
 import com.atarget.atargetbackend.persona.controller.request.UpdatePersonaRequest;
 import com.atarget.atargetbackend.persona.controller.response.CreatePersonaResponse;
 import com.atarget.atargetbackend.auth.repository.PersonaRepository;
+import com.atarget.atargetbackend.persona.service.wrapper.CreatePersonaWrapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,7 +15,7 @@ public class UpdatePersonaService {
 
 	private final PersonaRepository personaRepository;
 
-	public CreatePersonaResponse execute(UpdatePersonaRequest request) {
+	public CreatePersonaWrapper execute(final String personaId, final UpdatePersonaRequest request) {
 
 //		if (personaRepository.findByEmail(request.email())
 //		                     .isPresent()) {

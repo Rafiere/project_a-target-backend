@@ -32,7 +32,7 @@ public class GenerateAuthTokenComponent {
 
 	public String generateAccessToken(final User user) {
 
-		final Algorithm algorithm = Algorithm.HMAC512(accessTokenSecret);
+		final Algorithm algorithm = Algorithm.HMAC256(accessTokenSecret);
 
 		try {
 			return JWT.create()
@@ -42,6 +42,9 @@ public class GenerateAuthTokenComponent {
 			          .withIssuedAt(Instant.now())
 			          .withSubject(user.getEmail())
 			          .withExpiresAt(generateExpirationDate(AuthTokenType.ACCESS_TOKEN))
+			          .withClaim("role",
+			                     user.getUserRole()
+			                         .getRole())
 			          .sign(algorithm);
 
 		} catch (final JWTCreationException e) {
@@ -52,7 +55,7 @@ public class GenerateAuthTokenComponent {
 
 	public String generateRefreshToken(final User user) {
 
-		final Algorithm algorithm = Algorithm.HMAC512(refreshTokenSecret);
+		final Algorithm algorithm = Algorithm.HMAC256(refreshTokenSecret);
 
 		try {
 			return JWT.create()
@@ -62,6 +65,9 @@ public class GenerateAuthTokenComponent {
 			          .withIssuedAt(Instant.now())
 			          .withSubject(user.getEmail())
 			          .withExpiresAt(generateExpirationDate(AuthTokenType.REFRESH_TOKEN))
+			          .withClaim("role",
+			                     user.getUserRole()
+			                         .getRole())
 			          .sign(algorithm);
 
 		} catch (final JWTCreationException e) {
@@ -70,7 +76,7 @@ public class GenerateAuthTokenComponent {
 		}
 	}
 
-	private Instant generateExpirationDate(final AuthTokenType authTokenType){
+	private Instant generateExpirationDate(final AuthTokenType authTokenType) {
 
 		return LocalDateTime.now()
 		                    .plusSeconds(getCorrectExpirationTimeBasedInAuthTokenType(authTokenType))

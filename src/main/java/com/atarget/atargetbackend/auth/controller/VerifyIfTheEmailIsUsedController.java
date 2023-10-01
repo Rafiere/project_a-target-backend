@@ -20,7 +20,7 @@ public class VerifyIfTheEmailIsUsedController {
 	private final VerifyIfTheEmailIsUsedService service;
 
 	@GetMapping(value = "/auth/email/{email}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<VerifyIfTheEmailIsUsedResponse> execute(final @Email @NotBlank @PathVariable String email){
+	public ResponseEntity<VerifyIfTheEmailIsUsedResponse> execute(@Email @NotBlank @PathVariable final String email){
 
 		final var serviceWrapper = service.execute(email);
 

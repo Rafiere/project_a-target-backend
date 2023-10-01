@@ -25,7 +25,7 @@ public class CreatePersonaController {
 
 	@PostMapping(path = "/personas/register", consumes = MediaType.APPLICATION_JSON_VALUE,
 	             produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<CreatePersonaResponse> register(final @Valid @NotNull @RequestBody CreatePersonaRequest request) {
+	public ResponseEntity<CreatePersonaResponse> register(@Valid @NotNull @RequestBody final CreatePersonaRequest request) {
 
 		final var serviceWrapper = service.execute(request);
 

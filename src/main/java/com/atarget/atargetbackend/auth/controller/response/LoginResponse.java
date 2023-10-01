@@ -1,10 +1,12 @@
 package com.atarget.atargetbackend.auth.controller.response;
 
-import com.atarget.atargetbackend.shared.auth.enums.AuthTokenType;
+import com.atarget.atargetbackend.auth.service.wrapper.LoginWrapper;
 
-public record LoginResponse(String accessToken, AuthTokenType tokenType, Long expirationInSeconds){
+public record LoginResponse(AccessTokenResponse accessTokenResponse, RefreshTokenResponse refreshTokenResponse) {
 
-	public static LoginResponse of(String accessToken, Long expirationInSeconds){
-		return new LoginResponse(accessToken, AuthTokenType.ACCESS_TOKEN, expirationInSeconds);
+	public static LoginResponse from(final LoginWrapper loginWrapper){
+
+		return new LoginResponse(AccessTokenResponse.from(loginWrapper),
+		                         RefreshTokenResponse.from(loginWrapper));
 	}
 }

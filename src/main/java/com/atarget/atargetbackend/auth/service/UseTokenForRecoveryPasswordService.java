@@ -21,7 +21,7 @@ public class UseTokenForRecoveryPasswordService {
 	private final TokenRepository tokenRepository;
 	private final UserRepository userRepository;
 
-	public void execute(UseTokenForRecoveryPasswordRequest request, String tokenText){
+	public void execute(final UseTokenForRecoveryPasswordRequest request, final String tokenText){
 
 		final Token foundToken = tokenRepository.findTokenByTokenText(tokenText)
 		                                  .orElseThrow(() -> ResourceNotFoundException.of(Resources.TOKEN, tokenText));

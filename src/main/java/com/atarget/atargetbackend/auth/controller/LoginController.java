@@ -22,9 +22,11 @@ public class LoginController {
 	private final LoginService loginService;
 
 	@PostMapping(path = "/auth/login", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<LoginResponse> execute(final @NotNull @RequestBody @Valid LoginRequest request){
+	public ResponseEntity<LoginResponse> execute(@NotNull @RequestBody @Valid final LoginRequest request){
 
-		var response = loginService.execute(request);
+		final var wrapper = loginService.execute(request);
+
+		final var response = LoginResponse.from(wrapper);
 
 		return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
 	}

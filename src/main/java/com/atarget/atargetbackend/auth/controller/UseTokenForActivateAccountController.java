@@ -17,7 +17,7 @@ public class UseTokenForActivateAccountController {
 	private final UseTokenForActivateAccountService service;
 
 	@GetMapping(path = "/auth/activate-account/{token}")
-	public ResponseEntity<Void> register(final @NotBlank @PathVariable String token) {
+	public ResponseEntity<Void> register(@NotBlank @PathVariable final String token) {
 
 		service.execute(token);
 
