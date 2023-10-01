@@ -6,6 +6,7 @@ import com.atarget.atargetbackend.shared.auth.enums.AuthTokenType;
 import com.atarget.atargetbackend.shared.exception.custom.ResourceNotFoundException;
 import com.atarget.atargetbackend.shared.exception.custom.enums.Resources;
 import com.atarget.atargetbackend.shared.routes.RoutesGroups;
+import com.atarget.atargetbackend.shared.utils.StringUtils;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -17,6 +18,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.http.HttpHeaders;
 
 import java.io.IOException;
 
@@ -57,13 +59,13 @@ public class SecurityFilter extends OncePerRequestFilter {
 
 	private String recoverToken(final HttpServletRequest request) {
 
-		final var authHeader = request.getHeader("Authorization");
+		final var authHeaderValue = request.getHeader(HttpHeaders.AUTHORIZATION);
 
-		if (authHeader ==
+		if (authHeaderValue ==
 		    null) {
 			return null;
 		}
 
-		return authHeader.replace("Bearer ", "");
+		return StringUtils.removeBearerFromToken(authHeaderValue);
 	}
 }
