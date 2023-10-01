@@ -5,6 +5,7 @@ import com.atarget.atargetbackend.shared.auth.ManipulateAuthTokenComponent;
 import com.atarget.atargetbackend.shared.auth.enums.AuthTokenType;
 import com.atarget.atargetbackend.shared.exception.custom.ResourceNotFoundException;
 import com.atarget.atargetbackend.shared.exception.custom.enums.Resources;
+import com.atarget.atargetbackend.shared.routes.RoutesGroups;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -34,8 +35,10 @@ public class SecurityFilter extends OncePerRequestFilter {
 
 		final var token = this.recoverToken(request);
 
+		boolean isSomeUrlThatShouldNotPassInsideThisFilter = request.getRequestURI().equals(RoutesGroups.AUTH.getPath() + "refresh-token");
+
 		if (token !=
-		    null) {
+		    null && (!isSomeUrlThatShouldNotPassInsideThisFilter)) {
 
 			final DecodedJWT decodedJWT = manipulateAuthTokenComponent.validate(AuthTokenType.ACCESS_TOKEN, token);
 

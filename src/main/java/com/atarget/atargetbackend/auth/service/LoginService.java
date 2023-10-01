@@ -22,6 +22,8 @@ public class LoginService {
 	@Value("${environment.api.security.tokens.access-token.expiration-in-seconds}") private Long
 			accessTokenExpirationInSeconds;
 
+	@Value("${environment.api.security.tokens.refresh-token.expiration-in-seconds}") private Long refreshTokenExpirationInSeconds;
+
 	public LoginResponse execute(final LoginRequest request) {
 
 		final var usernamePassword = new UsernamePasswordAuthenticationToken(request.email(), request.password());
@@ -29,7 +31,8 @@ public class LoginService {
 		final var auth = this.authenticationManager.authenticate(usernamePassword);
 
 		final String generatedAccessToken = generateAuthTokenComponent.generateAccessToken((User) auth.getPrincipal());
+		final String generatedRefreshToken = generateAuthTokenComponent.generateRefreshToken((User) auth.getPrincipal());
 
-		return LoginResponse.of(generatedAccessToken, accessTokenExpirationInSeconds);
+		return LoginResponse.of(generatedAccessToken, accessTokenExpirationInSeconds, generatedRefreshToken, refreshTokenExpirationInSeconds);
 	}
 }

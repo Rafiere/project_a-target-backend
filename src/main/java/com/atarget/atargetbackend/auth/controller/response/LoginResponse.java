@@ -1,10 +1,13 @@
 package com.atarget.atargetbackend.auth.controller.response;
 
-import com.atarget.atargetbackend.shared.auth.enums.AuthTokenType;
+public record LoginResponse(AccessTokenResponse accessTokenResponse, RefreshTokenResponse refreshTokenResponse) {
 
-public record LoginResponse(String accessToken, AuthTokenType tokenType, Long expirationInSeconds){
+	public static LoginResponse of(final String accessToken,
+	                               final Long accessTokenExpirationInSeconds,
+	                               final String refreshToken,
+	                               final Long refreshTokenExpirationInSeconds) {
 
-	public static LoginResponse of(String accessToken, Long expirationInSeconds){
-		return new LoginResponse(accessToken, AuthTokenType.ACCESS_TOKEN, expirationInSeconds);
+		return new LoginResponse(AccessTokenResponse.of(accessToken, accessTokenExpirationInSeconds),
+		                         RefreshTokenResponse.of(refreshToken, refreshTokenExpirationInSeconds));
 	}
 }
